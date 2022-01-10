@@ -1,25 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import Main from "./components/Main";
+import {Route, Routes, useNavigate} from "react-router-dom";
+import PrivateRoute from "./components/helpers/PrivateRoute";
+import Login from "./components/Login";
+import {useEffect, useState} from "react";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import {createTheme, CssBaseline} from "@mui/material";
+import {ThemeProvider} from "@emotion/react";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const navigate = useNavigate();
+
+    const [user, setUser] = useState(null)
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            setUser(user)
+            localStorage.setItem('expectSignIn', '1')
+
+            // ...
+        } else {
+            localStorage.removeItem("api_token")
+            localStorage.removeItem('expectSignIn')
+            setUser(null)
+        }
+    });
+    const theme = createTheme({
+        components:{
+            MuiListItemIcon:{
+                styleOverrides:{
+                    root:{
+                        paddingLeft:0
+                    }
+                }
+            }
+        },
+        palette: {
+            mode: 'dark',
+        },
+        typography: {
+            fontSize: 13,
+            fontFamily: [
+                "Inter",
+                "serif"
+            ].join(','),
+        }
+    });
+
+    useEffect(() => {
+    }, [user])
+
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+        <Routes>
+            <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
+                <Route path={"/:type/:id"} element={<Main/>}/>
+                <Route exact path={"/"} element={<Main/>}/>
+            </Route>
+            <Route exact path={"/login"} element={<Login/>}/>
+        </Routes>
+        </ThemeProvider>
+    )
+
 }
 
 export default App;
