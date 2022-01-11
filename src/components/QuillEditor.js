@@ -1,18 +1,38 @@
 import ReactQuill, {Quill} from 'react-quill';
 import {useEffect, useRef, useState} from "react";
+import NotesService from "../service/NotesService";
 
 function QuillEditor(props) {
 
-    const [note, setNote] = useState("")
+    const [note, setNote] = useState([])
     const [title, setTitle] = useState(props.note.name || "Untitled")
     const [locked, setLocked] = useState(props.note.locked)
     const [dateModified, setDateModified] = useState(props.note.updated_at)
     const [deleted, setDeleted] = useState(props.note.deleted);
+    const [value, setValue] = useState(null)
     const editorRef = useRef(null);
+
+    const saveToBackend = () => {
+        if (note.id) {
+            const data = {
+                text: JSON.stringify(editorRef.current.editor.getContents()),
+                name: title,
+            }
+            NotesService.update(note.id, data)
+                .then((result) => {
+
+                }).catch((err) => {
+            });
+        }
+    }
+    const onChange = () => {
+        saveToBackend()
+    }
 
     useEffect(() => {
         if (props.note.id) {
-            setNote(JSON.parse(props.note.text))
+            setValue(JSON.parse(props.note.text))
+            setNote(props.note)
             setTitle(props.note.name)
             setDateModified(props.note.updated_at)
             setLocked(props.note.locked)
@@ -21,13 +41,15 @@ function QuillEditor(props) {
     }, [props.note.id, props.note.locked, props.note.deleted])
 
     return (
-        <ReactQuill
-            theme={"bubble"}
-            placeholder="Click here to start writing"
-            value={note}
-            ref={editorRef}
-            bounds={".quill"}
-        />
+        <div className={""}>
+            <ReactQuill
+                theme={"bubble"}
+                placeholder="Click here to start writing"
+                value={value}
+                ref={editorRef}
+                bounds={".quill"}
+                onChange={onChange}/>
+        </div>
     )
 }
 

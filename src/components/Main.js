@@ -1,5 +1,4 @@
 import Sidebar from "./Sidebar";
-import Notelist from "./Notelist";
 import Content from "./Content";
 import {useEffect, useState} from "react";
 import NotesService from "../service/NotesService";
@@ -12,7 +11,7 @@ function Main() {
     const [notes, setNotes] = useState([])
     const [currentFolder, setCurrentFolder] = useState({})
     const [currentNote, setCurrentNote] = useState([])
-    const[treeData, setTreeData] = useState([])
+    const [treeData, setTreeData] = useState([])
     const [dropped, setDropped] = useState(false);
     const [bookMarked, setBookMarked] = useState(false);
     const [noteCreated, setNoteCreated] = useState(false);
@@ -63,12 +62,9 @@ function Main() {
     }
 
     const folderHandleClick = (id, name) => {
-        NotesService.getNotesByCategory(id).then((result) => {
-            setNotes(result.data)
-            setCurrentFolder({
-                name: name,
-                id: id
-            })
+        setCurrentFolder({
+            id: id,
+            name: name
         })
     }
 

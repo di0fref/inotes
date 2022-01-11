@@ -10,7 +10,7 @@ function Content(props) {
                 </div>
             </div>
 
-            <div className={"h-full flex justify-center"}>
+            <div className={"h-full flex justify-center editor overflow-y-auto"}>
                 <div className={"w-full h-full lg:w-160 "}>
                     <QuillEditor note={props.currentNote}/>
                 </div>

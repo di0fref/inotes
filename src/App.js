@@ -28,11 +28,19 @@ function App() {
         }
     });
     const theme = createTheme({
-        components:{
-            MuiListItemIcon:{
-                styleOverrides:{
-                    root:{
-                        paddingLeft:0
+        components: {
+            MuiListItemButton: {
+                styleOverrides: {
+                    root: {
+                        // margin: 0,
+                        // padding:0
+                    }
+                }
+            },
+            MuiListItemIcon: {
+                styleOverrides: {
+                    root: {
+                        paddingLeft: 0
                     }
                 }
             }
@@ -41,7 +49,7 @@ function App() {
             mode: 'dark',
         },
         typography: {
-            fontSize: 13,
+            // fontSize: 13,
             fontFamily: [
                 "Inter",
                 "serif"
@@ -54,14 +62,15 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-        <Routes>
-            <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
-                <Route path={"/:type/:id"} element={<Main/>}/>
-                <Route exact path={"/"} element={<Main/>}/>
-            </Route>
-            <Route exact path={"/login"} element={<Login/>}/>
-        </Routes>
+            <CssBaseline/>
+            <Routes>
+                <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
+                    <Route path={"/notes/:id"} element={<Main/>}/>
+                    <Route exact path={"/:id"} element={<Main/>}/>
+                    <Route exact path={"/"} element={<Main/>}/>
+                </Route>
+                <Route exact path={"/login"} element={<Login/>}/>
+            </Routes>
         </ThemeProvider>
     )
 
