@@ -18,12 +18,13 @@ a:link{
 	@apply pl-8 !important;
 }
 
-/*.Mui-selected {*/
-/*@apply rounded  !important;*/
-/*@apply p-0 m-0 !important*/
+.Mui-selected {
+@apply rounded  !important;
 
-/*}*/
-
+}
+.dark .dark\:highlight-white {
+	box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 5%);
+}
 .MuiListItemButton-root:hover {
 	@apply rounded !important;
 }

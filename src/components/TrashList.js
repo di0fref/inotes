@@ -5,7 +5,7 @@ import {Delete, ExpandLess, ExpandMore} from "@mui/icons-material";
 import {sidebarListStyle} from "./styles/styles"
 
 
-function TrashList() {
+function TrashList(props) {
     const [trash, setTrash] = useState([])
     const [open, setOpen] = useState(false)
 
@@ -13,7 +13,7 @@ function TrashList() {
         NotesService.getTrash().then((result) => {
             setTrash(result.data)
         })
-    }, [])
+    }, [props.trashed])
 
     return (
         <List dense style={sidebarListStyle}>

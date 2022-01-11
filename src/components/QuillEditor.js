@@ -26,7 +26,7 @@ function QuillEditor(props) {
         }
     }
     const onChange = () => {
-        saveToBackend()
+        // saveToBackend()
     }
 
     useEffect(() => {

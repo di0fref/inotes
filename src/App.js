@@ -32,15 +32,15 @@ function App() {
             MuiListItemButton: {
                 styleOverrides: {
                     root: {
-                        // margin: 0,
-                        // padding:0
+                        // marginTop: 3,
+                        paddingLeft:8
                     }
                 }
             },
             MuiListItemIcon: {
                 styleOverrides: {
                     root: {
-                        paddingLeft: 0
+                        paddingLeft: 0,
                     }
                 }
             }
@@ -65,7 +65,7 @@ function App() {
             <CssBaseline/>
             <Routes>
                 <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
-                    <Route path={"/notes/:id"} element={<Main/>}/>
+                    <Route path={"/folder/:folder_id/note/:note_id"} element={<Main/>}/>
                     <Route exact path={"/:id"} element={<Main/>}/>
                     <Route exact path={"/"} element={<Main/>}/>
                 </Route>

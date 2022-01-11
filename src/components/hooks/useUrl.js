@@ -4,8 +4,8 @@ import {useParams} from "react-router-dom";
 const useUrl = callback => {
     let params = useParams()
     useEffect(() => {
-        if (params) {
-            callback(params.type, params.id);
+        if (params.note_id && params.folder_id) {
+            callback(params.note_id, params.folder_id);
         }
     }, [params])
 
