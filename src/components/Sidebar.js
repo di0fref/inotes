@@ -49,7 +49,7 @@ function SidebarItem(props) {
                               ? (props.currentNote.id === props.items.id)
                               : null
                       }>
-                <ListItemButton sx={{pl: props.depth * 2,}} onClick={
+                <ListItemButton sx={{pl: props.depth * 2}} onClick={
                     () => {
                         clickHandle(props.items.id, props.items.type, props.items.folder_id)
                     }}>
@@ -59,7 +59,7 @@ function SidebarItem(props) {
                             : <Article/>}
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400"}>
+                        <span className={"font-medium text-gray-400 "}>
                                 {props.items.name}
                         </span>
                     </ListItemText>
@@ -151,7 +151,7 @@ function Sidebar(props) {
                                     }
                                 }>
                                 <ListItemIcon>
-                                    <Star className={"text-yellow-500"}/>
+                                    <Star className={"text-yellow-400"}/>
                                 </ListItemIcon>
                                 <ListItemText>
                                     <span className={"font-medium text-gray-400"}>Starred</span>
@@ -160,7 +160,9 @@ function Sidebar(props) {
                             </ListItemButton>
                         </ListItem>
                         <Collapse in={starredOpen}>
-                            <Bookmarks bookmarked={props.bookmarked}/>
+                            <List dense>
+                                <Bookmarks bookmarked={props.bookMarked}/>
+                            </List>
                         </Collapse>
                     </List>
                     <List dense style={sidebarListStyle}>
@@ -184,9 +186,10 @@ function Sidebar(props) {
                                 selected === "tags"
                             }>
                             <ListItemButton onClick={() => {
-                                    folderHandleClick("tags")
-                                    setTagsOpen(!tagsOpen)}
-                                    }>
+                                folderHandleClick("tags")
+                                setTagsOpen(!tagsOpen)
+                            }
+                            }>
                                 <ListItemIcon><Tag className={"text-blue-400"}/></ListItemIcon>
                                 <ListItemText><span className={"font-medium text-gray-400"}>Tags</span></ListItemText>
                                 {tagsOpen ? <ExpandLess/> : <ExpandMore/>}
@@ -201,13 +204,13 @@ function Sidebar(props) {
                     <List dense style={sidebarListStyle}>
                         <ListItem disablePadding sx={{my: 0.5}} selected={selected === "notes"}
 
-                                  // secondaryAction={
-                                  //     <button>
-                                  //     <MoreVert
-                                  //         edge="end"
-                                  //     />
-                                  //     </button>
-                                  // }
+                            // secondaryAction={
+                            //     <button>
+                            //     <MoreVert
+                            //         edge="end"
+                            //     />
+                            //     </button>
+                            // }
                         >
                             <ListItemButton
                                 onClick={

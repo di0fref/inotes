@@ -51,6 +51,19 @@ function Main() {
         [params]
     );
 
+    const setBookmark = () => {
+
+        console.log(currentNote.bookmark);
+        currentNote.bookmark = currentNote.bookmark ? 0 : 1;
+        console.log(currentNote.bookmark);
+
+        NotesService.update(currentNote.id, {
+            bookmark: currentNote.bookmark
+        }).then((result) => {
+            setCurrentNote(result.data)
+            setBookMarked(!bookMarked)
+        })
+    }
     const noteClicked = (id) => {
         NotesService.get(id)
             .then((result) => {
@@ -71,9 +84,9 @@ function Main() {
 
     return (
         <div className={"wrapper flex w-full h-screen"}>
-            <Sidebar trashed={trashed} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
+            <Sidebar trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
             {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
-            <Content key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
+            <Content setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
 }
