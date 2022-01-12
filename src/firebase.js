@@ -20,7 +20,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth()
 
-export const signOutFireBAse = () => {
+export const signOutFireBase = () => {
     auth.signOut().then((res) =>{})
 }
 

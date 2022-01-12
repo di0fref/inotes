@@ -1,11 +1,10 @@
-// import {FaLock, FcGoogle, HiLockClosed, HiMail} from "react-icons/all";
 import {useState} from "react";
 import NotesService from "../service/NotesService";
 import {Link, useNavigate} from "react-router-dom";
 // import ThemeSwitcher from "./ThemeSwitcher";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
-import app from "../firebase"
+import app, {signOutFireBase} from "../firebase"
 import {FcGoogle} from "react-icons/fc";
 import {FaLock} from "react-icons/fa";
 import {HiLockClosed, HiMail} from "react-icons/hi";
@@ -49,7 +48,6 @@ function Login(props) {
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const user = result.user;
-                console.log(credential);
 
                 /* Validate user */
                 NotesService.login({
@@ -60,6 +58,10 @@ function Login(props) {
                 }).then((result) => {
                     localStorage.setItem("api_token", result.data.api_token)
                     navigate('/')
+                }).catch((err) => {
+                    console.log(err);
+                    /* Sign out user on net fail */
+                    signOutFireBase()
                 })
             }).catch((error) => {
             // Handle Errors here.

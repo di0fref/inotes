@@ -5,7 +5,9 @@
 :root{
 	--editor-url-color: rgb(67 56 202);
 }
-
+body.dark{
+	--editor-url-color: rgb(56 189 248);
+}
 a:link{
 	text-decoration: none;
 }

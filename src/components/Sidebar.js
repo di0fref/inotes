@@ -109,7 +109,7 @@ function Sidebar(props) {
     const folderHandleClick = (id) => {
         props.folderHandleClick(id);
         setSelected(id);
-        navigator("/" + id)
+        // navigator("/" + id)
     }
 
     return (

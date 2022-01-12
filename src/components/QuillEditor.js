@@ -22,12 +22,15 @@ function QuillEditor(props) {
                 .then((result) => {
 
                 }).catch((err) => {
+                    console.log(err);
             });
         }
     }
-    const onChange = () => {
-        // saveToBackend()
-    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => saveToBackend(), 1000);
+        return () => clearTimeout(timer);
+    }, [value])
 
     useEffect(() => {
         if (props.note.id) {
@@ -48,7 +51,7 @@ function QuillEditor(props) {
                 value={value}
                 ref={editorRef}
                 bounds={".quill"}
-                onChange={onChange}/>
+                onChange={setValue}/>
         </div>
     )
 }
