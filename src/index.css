@@ -2,46 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-	--editor-url-color: rgb(67 56 202);
-}
-body.dark{
-	--editor-url-color: rgb(56 189 248);
-}
-a:link{
-	text-decoration: none;
-}
-.MuiListItemIcon-root {
-	min-width: 0 !important;
-	@apply mr-2
+:root {
+    --editor-url-color: rgb(67 56 202);
 }
 
-.MuiListItemText-inset {
-	@apply pl-8 !important;
+body.dark {
+    --editor-url-color: rgb(56 189 248);
 }
 
-.Mui-selected {
-@apply rounded  !important;
+a:link {
+    text-decoration: none;
+}
 
-}
-.dark .dark\:highlight-white {
-	box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 5%);
-}
+/*.MuiListItemIcon-root {*/
+/*    min-width: 0 !important;*/
+/*    @apply mr-2*/
+/*}*/
+/*.MuiListItemText-inset {*/
+/*    @apply pl-8 !important;*/
+/*}*/
 .MuiListItemButton-root:hover {
-	@apply rounded !important;
+    @apply rounded !important;
 }
+.Mui-selected {
+    @apply rounded  !important;
+}
+
+.dark .dark\:highlight-white {
+    box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 5%);
+}
+
 
 .sidebar-list {
-	height: calc(100% - 6rem);
+    height: calc(100% - 6rem);
 }
 
 button:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .note-card.selected {
-	box-shadow: inset 4px 0 red;
-	/*border-left: 1px solid red;*/
+    box-shadow: inset 4px 0 red;
+    /*border-left: 1px solid red;*/
 }
 
 
@@ -51,60 +53,61 @@ button:hover {
 .ql-editor h4,
 .ql-editor h5,
 .ql-editor h6 {
-	@apply mb-2 font-semibold;
-	font-weight: 600;
-	margin-top: 10px;
-	margin-bottom: 4px;
+    @apply mb-2 font-semibold;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 4px;
 }
 
 .ql-bubble .ql-editor h1 {
-	font-size: 2em;
+    font-size: 2em;
 }
 
 .ql-bubble .ql-editor h2 {
-	font-size: 1.7em;
+    font-size: 1.7em;
 }
 
 .ql-bubble .ql-editor h3 {
-	font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .ql-bubble .ql-editor code, .ql-bubble .ql-editor pre {
-	border-radius: 3px !important;
-	@apply text-base;
+    border-radius: 3px !important;
+    @apply text-base;
 }
 
 .ql-bubble .ql-editor p,
 .ql-bubble .ql-editor ul,
 .ql-bubble .ql-editor ol {
-	line-height: 1.6em;
-	font-size: 1rem;
+    line-height: 1.6em;
+    font-size: 1rem;
 }
 
 .ql-bubble .ql-editor p,
 .ql-bubble .ql-editor pre,
 .ql-bubble .ql-editor code,
 .ql-bubble .ql-editor blockquote {
-	@apply mb-4
+    @apply mb-4
 }
 
 .ql-editor a {
-	color: var(--editor-url-color) !important;
-	text-decoration: none !important;
+    color: var(--editor-url-color) !important;
+    text-decoration: none !important;
 }
 
 .ql-editor ul, .ql-editor ol {
-	@apply my-1
+    @apply my-1
 }
 
 .ql-editor {
-	overflow-x: hidden;
-	font-family: "Inter", "serif" !important;
+    overflow-x: hidden;
+    font-family: "Inter", "serif" !important;
 }
+
 /* Placeholder */
 .quill > .ql-container > .ql-editor.ql-blank::before {
     opacity: 0.5;
-	font-size: 16px;
+    font-size: 16px;
     /*color: var();*/
     /*@apply text-base;*/
     /*font-style: normal;*/

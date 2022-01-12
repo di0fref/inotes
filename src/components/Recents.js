@@ -1,16 +1,17 @@
 import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {Article, ExpandLess, ExpandMore, Star, Tag} from "@mui/icons-material";
+import {Alarm, Article, ExpandLess, ExpandMore, Star} from "@mui/icons-material";
 
-function Tags(props) {
-    const [tags, setTags] = useState([])
+function Recents(props) {
+    const [recents, setRecents] = useState([])
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
-
-
-    }, [props.tagged])
+        NotesService.getRecent().then((result) => {
+            setRecents(result.data)
+        })
+    }, [props.recent])
 
     const clickHandler = () => {
         setOpen(!open)
@@ -20,32 +21,32 @@ function Tags(props) {
             <ListItem disablePadding>
                 <ListItemButton onClick={clickHandler}>
                     <ListItemIcon>
-                        <Tag className={"text-blue-400"}/>
+                        <Alarm/>
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400"}>Tags</span>
+                        <span className={"font-medium text-gray-400"}>Recent</span>
                     </ListItemText>
                     {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItemButton>
             </ListItem>
             <Collapse in={open}>
-                {tags.length ?
-                    tags.map((item, index) => {
+                {recents.length ?
+                    recents.map((item, index) => {
                         return (
-                            <ListItem disablePadding key={index} sx={{pl: 4}}>
+                            <ListItem disablePadding key={index} sx={{pl: 2.5}}>
                                 <ListItemButton>
-                                    <ListItemIcon><Tags className={"text-blue-400"}/></ListItemIcon>
+                                    <ListItemIcon><Article sx={{width:16}}/></ListItemIcon>
                                     <ListItemText><span className={"text-gray-400"}>{item.name}</span></ListItemText>
                                 </ListItemButton>
                             </ListItem>
                         )
                     }) :
                     <div className={"dark:highlight-white text-sm p-3 rounded rounded-lg bg-gray-700/30 mt-2 text-gray-400"}>
-                        Your tags will be sent here.
+                        Your recent documents will be sent here.
                     </div>}
             </Collapse>
         </List>
     )
 }
 
-export default Tags
+export default Recents

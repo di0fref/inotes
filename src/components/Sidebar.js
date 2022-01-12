@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {
     Checkbox,
-    Collapse,
+    Collapse, Divider,
     List,
     ListItem,
     ListItemButton,
@@ -18,10 +18,11 @@ import {
     Tag,
 } from "@mui/icons-material";
 import TrashList from "./TrashList";
-import {sidebarListStyle, sidebarListButton} from "./styles/styles"
+import {sidebarListButton} from "./styles/styles"
 import {Link, useNavigate} from "react-router-dom";
 import Bookmarks from "./Bookmarks";
 import Tags from "./Tags";
+import Recents from "./Recents";
 
 function SidebarItem(props) {
 
@@ -41,25 +42,27 @@ function SidebarItem(props) {
 
     return (
         <>
-            <ListItem disablePadding
-                      sx={{my: 0.5}}
-                      key={`${props.items.id}`}
-                      selected={
-                          props.items.type === "note"
-                              ? (props.currentNote.id === props.items.id)
-                              : null
-                      }>
-                <ListItemButton sx={{pl: props.depth * 2}} onClick={
+            <ListItem
+                sx={{ml: props.depth * 2.5, pl:props.depth * 0.5}}
+                disablePadding
+                key={`${props.items.id}`}
+                selected={
+                    props.items.type === "note"
+                        ? (props.currentNote.id === props.items.id)
+                        : null
+                }>
+                <ListItemButton onClick={
                     () => {
                         clickHandle(props.items.id, props.items.type, props.items.folder_id)
                     }}>
+
                     <ListItemIcon>
                         {props.items.type === "folder"
-                            ? <FolderOutlined/>
-                            : <Article/>}
+                            ? <FolderOutlined sx={{width:16}}/>
+                            : <Article sx={{width:16}}/>}
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400 "}>
+                        <span className={"font-medium text-gray-400"}>
                                 {props.items.name}
                         </span>
                     </ListItemText>
@@ -108,7 +111,7 @@ function Sidebar(props) {
 
     const folderHandleClick = (id) => {
         props.folderHandleClick(id);
-        setSelected(id);
+        // setSelected(id);
         // navigator("/" + id)
     }
 
@@ -137,81 +140,15 @@ function Sidebar(props) {
 
             <div className={"flex flex-col h-full sidebar-list overflow-y-auto"}>
                 <div className={"flex-grow "}>
-                    <List dense style={sidebarListStyle}>
-                        <ListItem disablePadding
-                                  key={`s1`}
-                                  selected={
-                                      selected === "starred"
-                                  }>
-                            <ListItemButton
-                                onClick={
-                                    () => {
-                                        folderHandleClick("starred")
-                                        setStarredOpen(!starredOpen)
-                                    }
-                                }>
-                                <ListItemIcon>
-                                    <Star className={"text-yellow-400"}/>
-                                </ListItemIcon>
-                                <ListItemText>
-                                    <span className={"font-medium text-gray-400"}>Starred</span>
-                                </ListItemText>
-                                {starredOpen ? <ExpandLess/> : <ExpandMore/>}
-                            </ListItemButton>
-                        </ListItem>
-                        <Collapse in={starredOpen}>
-                            <List dense>
-                                <Bookmarks bookmarked={props.bookMarked}/>
-                            </List>
-                        </Collapse>
-                    </List>
-                    <List dense style={sidebarListStyle}>
+
+                    <Bookmarks bookmarked={props.bookMarked}/>
+                    <Recents recent={false}/>
+                    <Tags tagged={false}/>
+
+                    <List dense>
                         <ListItem
-                            key={`s2`}
                             disablePadding
-                            selected={
-                                selected === "recent"
-                            }>
-                            <ListItemButton onClick={() => folderHandleClick("recent")}>
-                                <ListItemIcon><Alarm className={""}/></ListItemIcon>
-                                <ListItemText><span className={"font-medium text-gray-400"}>Recent</span></ListItemText>
-                            </ListItemButton>
-                        </ListItem>
-                    </List>
-                    <List dense style={sidebarListStyle}>
-                        <ListItem
-                            key={`s3`}
-                            disablePadding
-                            selected={
-                                selected === "tags"
-                            }>
-                            <ListItemButton onClick={() => {
-                                folderHandleClick("tags")
-                                setTagsOpen(!tagsOpen)
-                            }
-                            }>
-                                <ListItemIcon><Tag className={"text-blue-400"}/></ListItemIcon>
-                                <ListItemText><span className={"font-medium text-gray-400"}>Tags</span></ListItemText>
-                                {tagsOpen ? <ExpandLess/> : <ExpandMore/>}
-                            </ListItemButton>
-                        </ListItem>
-                        <Collapse in={tagsOpen}>
-                            <Tags bookmarked={props.tagged}/>
-                        </Collapse>
-                    </List>
-
-
-                    <List dense style={sidebarListStyle}>
-                        <ListItem disablePadding sx={{my: 0.5}} selected={selected === "notes"}
-
-                            // secondaryAction={
-                            //     <button>
-                            //     <MoreVert
-                            //         edge="end"
-                            //     />
-                            //     </button>
-                            // }
-                        >
+                            selected={selected === "notes"}>
                             <ListItemButton
                                 onClick={
                                     () => {
@@ -224,10 +161,8 @@ function Sidebar(props) {
                                     <span className={"font-medium text-gray-400"}>My documents</span>
                                 </ListItemText>
                                 {open ? <ExpandLess/> : <ExpandMore/>}
-
                             </ListItemButton>
                         </ListItem>
-
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             {tree.map((subItem, index) => {
                                 return (

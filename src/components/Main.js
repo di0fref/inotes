@@ -52,11 +52,7 @@ function Main() {
     );
 
     const setBookmark = () => {
-
-        console.log(currentNote.bookmark);
         currentNote.bookmark = currentNote.bookmark ? 0 : 1;
-        console.log(currentNote.bookmark);
-
         NotesService.update(currentNote.id, {
             bookmark: currentNote.bookmark
         }).then((result) => {

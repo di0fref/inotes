@@ -1,8 +1,7 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {Delete, ExpandLess, ExpandMore} from "@mui/icons-material";
-import {sidebarListStyle} from "./styles/styles"
 
 
 function TrashList(props) {
@@ -10,15 +9,17 @@ function TrashList(props) {
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
-        NotesService.getTrash().then((result) => {
-            setTrash(result.data)
-        })
+            NotesService.getTrash().then((result) => {
+                setTrash(result.data)
+            })
     }, [props.trashed])
 
     return (
-        <List dense style={sidebarListStyle}>
+        <List dense>
             <ListItem disablePadding>
-                <ListItemButton onClick={() => {setOpen(!open)}}>
+                <ListItemButton onClick={() => {
+                    setOpen(!open)
+                }}>
                     <ListItemIcon><Delete/></ListItemIcon>
                     <ListItemText>Trash</ListItemText>
                     {open ? <ExpandLess/> : <ExpandMore/>}
