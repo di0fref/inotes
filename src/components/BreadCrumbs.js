@@ -28,7 +28,7 @@ function BreadCrumbs(props) {
     }, [titleSaved, props.note.name])
 
     return (
-        <div className={"ml-4 text-muted md:w-full_ truncate"}>
+        <div className={"ml-4 text-muted md:w-full_ truncate text-sm"}>
             {/*{breadCrumb.join(" / ")} / {props.title? props.title:"Untitled"}*/}
 
             <div className={"flex text-sm_"}>

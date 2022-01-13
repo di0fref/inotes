@@ -121,7 +121,7 @@ function Sidebar(props) {
     }
 
     return (
-        <div className={"sidebar sm:w-76 w-full h-screen bg-lb sm:ml-0 -ml-76 flex-shrink-0 p-2"}>
+        <div className={"sidebar sm:w-76 w-full h-screen bg-lb sm:ml-0 -ml-76 flex-shrink-0 p-4"}>
 
             <UserMenu/>
             <div className={""}>

@@ -60,9 +60,9 @@ const theme = createTheme({
         mode: localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
     },
     typography: {
-        body2: {
-            fontSize: "1em",
-        },
+        // body2: {
+            fontSize: "16",
+        // },
         fontFamily: [
             "var(--font-family)",
             "serif"
