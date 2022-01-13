@@ -25,15 +25,15 @@ function BreadCrumbs(props) {
                 setBreadCrumb(p.reverse())
             })
         }
-    }, [titleSaved, props.note.id])
+    }, [titleSaved, props.note.name])
 
     return (
         <div className={"ml-4 text-muted md:w-full_ truncate"}>
             {/*{breadCrumb.join(" / ")} / {props.title? props.title:"Untitled"}*/}
 
-            <div className={"flex text-sm"}>
+            <div className={"flex text-sm_"}>
                 <div className={"flex items-center"}>
-                    <span><PersonOutlined className={"mr-2 text-normal"}/></span>
+                    <span><PersonOutlined className={"mr-2"}/></span>
                     <span>My documents</span>
                 </div>
                 {breadCrumb.map((item, index) => (

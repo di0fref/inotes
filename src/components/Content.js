@@ -1,8 +1,9 @@
 import QuillEditor from "./QuillEditor";
 import BreadCrumbs from "./BreadCrumbs";
-import {Star, StarOutline} from "@mui/icons-material";
+import {Lock, Star, StarOutline} from "@mui/icons-material";
 import {Tooltip} from "@mui/material";
 import {useEffect} from "react";
+import NoteMenu from "./Menus/NoteMenu";
 
 function Content(props) {
 
@@ -11,11 +12,11 @@ function Content(props) {
     }, [props.bookMarked])
 
     return (
-        <div className={"content h-full flex-grow "}>
-            <div className={"flex flex-col bg-gray-200 dark:bg-gray-700"}>
-                <div className={"p-3 flex items-center justify-between"}>
+        <div className={"content h-full flex-grow bg-gray-200 dark:bg-gray-700"}>
+            <div className={"flex flex-col"}>
+                <div className={"h-14 px-4 flex items-center justify-between"}>
                     <div>
-                        <Tooltip title={`${!props.currentNote.bookmark?"Add to favorites":"Remove from favorites"}`}>
+                        <Tooltip title={`${!props.currentNote.bookmark ? "Add to favorites" : "Remove from favorites"}`}>
                             <button onClick={props.setBookmark}>
                                 {!props.currentNote.bookmark
                                     ? <StarOutline/>
@@ -26,14 +27,20 @@ function Content(props) {
                     <div className={"mr-auto"}>
                         <BreadCrumbs note={props.currentNote}/>
                     </div>
-
-                    <div>Note menu</div>
+                     {props.currentNote.locked
+                            ? <Tooltip title={"Editing protected"}>
+                                    <Lock className={"text-red-500 ml-2 "}/>
+                        </Tooltip>
+                            : ""}
+                    <div>
+                        <NoteMenu currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
+                    </div>
                 </div>
             </div>
 
             <div className={"h-full flex justify-center editor overflow-y-auto bg-gray-200 dark:bg-gray-700"}>
                 <div className={"w-full h-full lg:w-160 dark:text-gray-300/90"}>
-                    <QuillEditor note={props.currentNote}/>
+                    <QuillEditor note={props.currentNote} titleChangeHandle={props.titleChangeHandle}/>
                 </div>
             </div>
         </div>

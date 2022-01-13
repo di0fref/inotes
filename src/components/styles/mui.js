@@ -5,7 +5,8 @@ const theme = createTheme({
         MuiSvgIcon: {
             styleOverrides: {
                 root: {
-                    width: 16
+                    width: 16,
+                    height: 16
                 }
             }
         },
@@ -14,26 +15,38 @@ const theme = createTheme({
                 root: {
                     marginTop: 2,
                     marginBottom: 2,
-                    width: "auto"
+                    width: "auto",
+                    '&.Mui-selected': {
+                        // paddingLeft:0
+                        // marginLeft:10
+                    },
+                },
+
+            }
+        },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    // backgroundColor: "var(--menu-bg)",
+                    // color: "var(--menu-color)"
                 }
             }
         },
         MuiList: {
             styleOverrides: {
                 root: {
-                    // background:"rgb(55 65 81 / var(--tw-bg-opacity))",
                     marginTop: 10,
                     padding: 0,
                 }
             }
         },
-        //     MuiListItemButton: {
-        //         styleOverrides: {
-        //             root: {
-        //                 paddingLeft: 8
-        //             }
-        //         }
-        //     },
+        MuiListItemButton: {
+            styleOverrides: {
+                root: {
+                    paddingLeft: 6
+                }
+            }
+        },
         MuiListItemIcon: {
             styleOverrides: {
                 root: {
@@ -44,12 +57,14 @@ const theme = createTheme({
         }
     },
     palette: {
-        mode: 'dark',
+        mode: localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
     },
     typography: {
-        // fontSize: 13,
+        body2: {
+            fontSize: "1em",
+        },
         fontFamily: [
-            "Inter",
+            "var(--font-family)",
             "serif"
         ].join(','),
     }

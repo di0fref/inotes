@@ -71,6 +71,16 @@ function Main() {
             });
     }
 
+    const titleChangeHandle = (title) => {
+        NotesService.update(currentNote.id, {name: title})
+            .then((result) => {
+                setCurrentNote(result.data)
+                setTitleChanged(!titleChanged)
+            }).catch((err) => {
+            console.log(err);
+        })
+    }
+
     const folderHandleClick = (id, name) => {
         setCurrentFolder({
             id: id,
@@ -78,11 +88,19 @@ function Main() {
         })
     }
 
+    const setLockedHandle = (locked) => {
+        console.log(locked);
+        NotesService.update(currentNote.id, {
+            locked: locked
+        }).then((result) => {
+            setCurrentNote(result.data)
+        })
+    }
     return (
         <div className={"wrapper flex w-full h-screen"}>
             <Sidebar trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
             {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
-            <Content setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
+            <Content titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
 }

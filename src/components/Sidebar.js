@@ -10,6 +10,7 @@ import {
     ListItemText
 } from "@mui/material";
 import {
+    Add,
     Alarm, Article,
     ExpandLess,
     ExpandMore,
@@ -23,6 +24,7 @@ import {Link, useNavigate} from "react-router-dom";
 import Bookmarks from "./Bookmarks";
 import Tags from "./Tags";
 import Recents from "./Recents";
+import UserMenu from "./Menus/UserMenu";
 
 function SidebarItem(props) {
 
@@ -43,7 +45,10 @@ function SidebarItem(props) {
     return (
         <>
             <ListItem
-                sx={{ml: props.depth * 2.5, pl:props.depth * 0.5}}
+                sx={{
+                    ml: props.depth * 2.5,
+                    pl: props.depth * 0.5
+                }}
                 disablePadding
                 key={`${props.items.id}`}
                 selected={
@@ -58,8 +63,8 @@ function SidebarItem(props) {
 
                     <ListItemIcon>
                         {props.items.type === "folder"
-                            ? <FolderOutlined sx={{width:16}}/>
-                            : <Article sx={{width:16}}/>}
+                            ? <FolderOutlined sx={{width: 16}}/>
+                            : <Article sx={{width: 16}}/>}
                     </ListItemIcon>
                     <ListItemText>
                         <span className={"font-medium text-gray-400"}>
@@ -116,24 +121,24 @@ function Sidebar(props) {
     }
 
     return (
-        <div className={"sidebar w-72 _w-full h-screen bg-lb sm:ml-0 -ml-72 flex-shrink-0 p-2"}>
+        <div className={"sidebar sm:w-76 w-full h-screen bg-lb sm:ml-0 -ml-76 flex-shrink-0 p-2"}>
 
-            <div className={"h-10 p-3"}>Avatar Menu</div>
-
-            {/*<div className={"px-3"}>*/}
-            {/*    <button className={"w-full bg-blue-600 hover:bg-blue-800 rounded h-8 mt-2 hover:pointer"}>*/}
-            {/*        <div className={"flex items-center"}>*/}
-            {/*            <div className={"ml-3 font-semibold text-sm"}>Create new</div>*/}
-            {/*            <div className={"ml-auto mr-2"}><ExpandMore/></div>*/}
-            {/*        </div>*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-
+            <UserMenu/>
             <div className={""}>
                 <button className={"border border-gray-600/60 bg-gray-700/50 rounded rounded-lg w-full py-1 hover:bg-gray-600/50 text-gray-500 hover:text-gray-300"}>
                     <div className={"flex items-center"}>
                         <div className={"mx-2"}><Search/></div>
                         <div className={""}>Search</div>
+                    </div>
+                </button>
+            </div>
+
+            <div className={"px-3_ mt-3"}>
+                <button className={"w-full bg-blue-600 hover:bg-blue-800 rounded h-9 mt-2 hover:pointer"}>
+                    <div className={"flex items-center"}>
+                        <div className={"ml-2 mr-2"}><Add/></div>
+                        <div className={"font-semibold text-sm"}>Create new</div>
+                        <div className={"ml-auto mr-4"}><ExpandMore/></div>
                     </div>
                 </button>
             </div>
@@ -185,6 +190,7 @@ function Sidebar(props) {
                 </div>
             </div>
         </div>
+
     )
 }
 
