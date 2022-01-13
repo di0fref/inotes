@@ -13,6 +13,7 @@ function Content(props) {
 
     return (
         <div className={"content flex-grow bg-gray-200 dark:bg-gray-900 "}>
+
             <div className={"flex flex-col"}>
                 <div className={"h-14 px-4 flex items-center justify-between"}>
                     <div className={"ml-12 md:ml-0"}>
