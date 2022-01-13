@@ -60,7 +60,7 @@ function QuillEditor(props) {
 
 
     return (
-        <div className={""}>
+        <div className={"ml-2"}>
             <div className={"mx-3 mt-6 mb-2"}>
                 <div className={"flex items-center justify-start"}>
                     <div><Alarm/></div>
@@ -75,7 +75,7 @@ function QuillEditor(props) {
                 placeholder={"Give your document a title"}
                 value={title || ""}
                 id={"title-input"}
-                className={"bg-transparent mx-3 w-full text-4xl font-bold border-0 focus:outline-none focus:ring-0"}
+                className={"font-extrabold tracking-tight dark:text-white bg-transparent px-3 w-full text-5xl  border-0 focus:outline-none focus:ring-0"}
             />
             <ReactQuill
                 theme={"bubble"}

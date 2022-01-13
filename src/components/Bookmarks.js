@@ -24,7 +24,7 @@ function Bookmarks(props) {
                         <Star className={"text-yellow-400"}/>
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400"}>Starred</span>
+                        <span className={"font-semibold text-gray-400"}>Starred</span>
                     </ListItemText>
                     {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItemButton>

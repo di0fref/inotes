@@ -17,8 +17,8 @@ function UserMenu() {
     const user = getAuth().currentUser
 
     return (
-        <div className={"border-b_ _dark:border-gray-700 h-14 _bg-gray-900 mb-2 pt-1 hover:bg-gray-700/80 rounded"}>
-            <button onClick={handleClick} className={"w-full   py-1 mb-2 px-2"}>
+        <div className={"h-14 w-full mb-4 pt-1 hover:bg-gray-700/80 rounded"}>
+            <button onClick={handleClick} className={"w-full py-1 mb-2 px-2"}>
                 <div className={"flex items-center justify-start"}>
                     <div className="avatar w-10 h-10 mr-1">
                         <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>
@@ -43,16 +43,16 @@ function UserMenu() {
                           minWidth: 200
                       }
                   }}>
-                <MenuItem>
+                <MenuItem dense>
                     <ListItemIcon><Construction/></ListItemIcon>
                     <ListItemText>Settings</ListItemText>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem dense>
                     <ListItemIcon><Help/></ListItemIcon>
                     <ListItemText>Help</ListItemText>
                 </MenuItem>
                 <Divider/>
-                <MenuItem>
+                <MenuItem dense>
                     <ListItemIcon><Logout/></ListItemIcon>
                     <ListItemText>Sign out</ListItemText>
                 </MenuItem>

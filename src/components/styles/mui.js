@@ -2,14 +2,14 @@ import {createTheme} from "@mui/material";
 
 const theme = createTheme({
     components: {
-        MuiSvgIcon: {
-            styleOverrides: {
-                root: {
-                    width: 16,
-                    height: 16
-                }
-            }
-        },
+        // MuiSvgIcon: {
+        //     styleOverrides: {
+        //         root: {
+        //             width: 16,
+        //             height: 16
+        //         }
+        //     }
+        // },
         MuiListItem: {
             styleOverrides: {
                 root: {
@@ -17,8 +17,14 @@ const theme = createTheme({
                     marginBottom: 2,
                     width: "auto",
                     '&.Mui-selected': {
-                        // paddingLeft:0
+                        // paddingLeft:0,
                         // marginLeft:10
+                        // color: "rgb(14 165 233)",
+                        // backgroundColor: "transparent"
+                    },
+                    '&:hover': {
+                        // color: "rgb(14 165 233)",
+                        // backgroundColor: "transparent"
                     },
                 },
 
@@ -27,19 +33,19 @@ const theme = createTheme({
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    // backgroundColor: "var(--menu-bg)",
+                    backgroundColor: "var(--menu-bg)",
                     // color: "var(--menu-color)"
                 }
             }
         },
-        MuiList: {
-            styleOverrides: {
-                root: {
-                    marginTop: 10,
-                    padding: 0,
-                }
-            }
-        },
+        // MuiList: {
+        //     styleOverrides: {
+        //         root: {
+        //             marginTop: 10,
+        //             padding: 0,
+        //         }
+        //     }
+        // },
         MuiListItemButton: {
             styleOverrides: {
                 root: {
@@ -61,7 +67,7 @@ const theme = createTheme({
     },
     typography: {
         // body2: {
-            fontSize: "16",
+        //     fontSize: "16",
         // },
         fontFamily: [
             "var(--font-family)",

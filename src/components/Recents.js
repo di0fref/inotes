@@ -24,7 +24,7 @@ function Recents(props) {
                         <Alarm/>
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400"}>Recent</span>
+                        <span className={"font-semibold text-gray-400"}>Recent</span>
                     </ListItemText>
                     {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItemButton>

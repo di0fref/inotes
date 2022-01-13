@@ -23,7 +23,7 @@ function Tags(props) {
                         <Tag className={"text-blue-400"}/>
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-medium text-gray-400"}>Tags</span>
+                        <span className={"font-semibold text-gray-400"}>Tags</span>
                     </ListItemText>
                     {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItemButton>
