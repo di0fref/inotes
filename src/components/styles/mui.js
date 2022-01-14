@@ -13,6 +13,7 @@ const theme = createTheme({
         MuiListItem: {
             styleOverrides: {
                 root: {
+                    paddingLeft:0,
                     marginTop: 2,
                     marginBottom: 2,
                     width: "auto",

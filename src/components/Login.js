@@ -77,11 +77,11 @@ function Login(props) {
 
     return (
         <>
-            <div className=" min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="rounded rounded-lg high max-w-md w-full space-y-8_ bg-secondary p-4 shadow_">
+            <div className="flex items-center justify-center min-h-full px-4 py-12  sm:px-6 lg:px-8">
+                <div className="w-full max-w-md p-4 rounded rounded-lg high space-y-8_ bg-secondary shadow_">
                     <div>
-                        <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-normal">
+                        <img className="w-auto h-12 mx-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
+                        <h2 className="mt-6 text-3xl font-extrabold text-center text-normal">
                             Sign in to your account
                         </h2>
                     </div>
@@ -106,8 +106,8 @@ function Login(props) {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
-                                    className="pl-10 pr-3 rounded relative block w-full px-3 py-2 bg-primary " placeholder="Email"/>
-                                <div className="m-px rounded absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none  bg-primary">
+                                    className="relative block w-full px-3 py-2 pl-10 pr-3 rounded bg-primary " placeholder="Email"/>
+                                <div className="absolute inset-y-0 left-0 flex items-center px-2 m-px rounded pointer-events-none bg-primary">
                                     <HiMail/>
                                 </div>
                             </div>
@@ -122,8 +122,8 @@ function Login(props) {
                                     name="password"
                                     type="password"
                                     autoComplete="off"
-                                    className="pl-10 pr-3 rounded relative block w-full px-3 py-2 " placeholder="Password"/>
-                                <div className="m-px rounded absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none bg-primary">
+                                    className="relative block w-full px-3 py-2 pl-10 pr-3 rounded " placeholder="Password"/>
+                                <div className="absolute inset-y-0 left-0 flex items-center px-2 m-px rounded pointer-events-none bg-primary">
                                     <FaLock/>
                                 </div>
                             </div>
@@ -131,8 +131,8 @@ function Login(props) {
 
 
                         <div>
-                            <button type="submit" className="mt-4 mb-8 group relative w-full flex justify-center h-10  py-3 px-4 border border-transparent font-medium rounded-md text-white button-apply">
-                              <span className="m-px rounded absolute left-0 inset-y-0 flex items-center pl-3">
+                            <button type="submit" className="relative flex justify-center w-full h-10 px-4 py-3 mt-4 mb-8 font-medium text-white border border-transparent rounded-md group button-apply">
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 m-px rounded">
                                   <HiLockClosed/>
                               </span>
                                 Sign in

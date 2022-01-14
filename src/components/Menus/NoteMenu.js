@@ -68,7 +68,9 @@ function NoteMenu(props) {
                 onClose={handleClose}
                 anchorEl={anchorEl}
                 open={open}>
-                <MenuItem dense={isDense}>
+                <MenuItem dense={isDense} onClick={() => {
+                    handleClose()
+                }}>
                     <ListItemIcon>
                         <PictureAsPdf/>
                     </ListItemIcon>
@@ -84,14 +86,18 @@ function NoteMenu(props) {
                         onChange={handleToggle('locked')}
                         checked={locked.indexOf('locked') !== -1}/>
                 </MenuItem>
-                <MenuItem dense={isDense}>
+                <MenuItem dense={isDense} onClick={() => {
+                    handleClose()
+                }}>
                     <ListItemIcon>
                         <Share/>
                     </ListItemIcon>
                     <ListItemText>Share document</ListItemText>
                 </MenuItem>
                 <Divider/>
-                <MenuItem dense={isDense}>
+                <MenuItem dense={isDense} onClick={() => {
+                    handleClose()
+                }}>
                     <ListItemIcon>
                         <Delete/>
                     </ListItemIcon>

@@ -36,7 +36,7 @@ function Bookmarks(props) {
                             <ListItem disablePadding key={index} sx={{pl: 2.5}}>
                                 <ListItemButton>
                                     <ListItemIcon><Article sx={{width:16}}/></ListItemIcon>
-                                    <ListItemText><span className={"text-gray-400"}>{item.name}</span></ListItemText>
+                                    <ListItemText><span className={"text-gray-400"}>{item.name?item.name:"Untitled"}</span></ListItemText>
                                 </ListItemButton>
                             </ListItem>
                         )

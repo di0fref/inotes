@@ -1,8 +1,8 @@
 import ReactQuill, {Quill} from 'react-quill';
 import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
-import {TextareaAutosize} from "@mui/material";
-import {Alarm} from "@mui/icons-material";
+import {TextareaAutosize, Tooltip} from "@mui/material";
+import {Alarm, Lock, LockOutlined} from "@mui/icons-material";
 import Moment from "react-moment";
 
 function QuillEditor(props) {
@@ -65,6 +65,9 @@ function QuillEditor(props) {
                 <div className={"flex items-center justify-start"}>
                     <div><Alarm/></div>
                     <div className={"ml-2"}>Updated <Moment fromNow={note.updated_at}/></div>
+                    {locked
+                        ?<Tooltip title={"Editing protected"}><div><LockOutlined className={"text-red-500 ml-2"}/></div></Tooltip>
+                        :null}
                 </div>
             </div>
             <TextareaAutosize
@@ -78,6 +81,7 @@ function QuillEditor(props) {
                 className={"font-extrabold tracking-tight dark:text-white bg-transparent px-3 w-full text-5xl  border-0 focus:outline-none focus:ring-0"}
             />
             <ReactQuill
+                readOnly={locked || deleted ? true : false}
                 theme={"bubble"}
                 placeholder="Click here to start writing"
                 value={value}

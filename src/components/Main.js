@@ -28,19 +28,9 @@ function Main() {
 
 
     useEffect(() => {
-
-        // console.log("useEffect");
         (async () => {
-
             let response = await FolderService.tree(0);
             setTreeData(response.data)
-
-            // let bookmarks = await NotesService.getBookMarks();
-            // setBookMarks(bookmarks.data);
-            //
-            // let trashData = await NotesService.getTrash();
-            // setTrash(trashData.data);
-
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
@@ -64,6 +54,7 @@ function Main() {
         NotesService.get(id)
             .then((result) => {
                 setCurrentNote(result.data);
+                folderHandleClick(result.data.folder_id)
                 /* Insert into recent */
             })
             .catch((err) => {
@@ -81,25 +72,40 @@ function Main() {
         })
     }
 
-    const folderHandleClick = (id, name) => {
+    const folderHandleClick = (id) => {
         setCurrentFolder({
             id: id,
-            name: name
+        })
+
+        NotesService.getAll(id).then((result) => {
+            setNotes(result.data)
         })
     }
 
     const setLockedHandle = (locked) => {
-        console.log(locked);
         NotesService.update(currentNote.id, {
             locked: locked
         }).then((result) => {
             setCurrentNote(result.data)
         })
     }
+
+    const noteCreateHandle = () => {
+        NotesService.create({
+            folder_id: currentFolder.id || 0,
+            name: ""
+        }).then((result) => {
+            setCurrentNote(result.data)
+            setNoteCreated(!noteCreated)
+            navigator(`/folder/${currentFolder.id}/note/${result.data.id}`)
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
     return (
         <div className={"wrapper flex w-full h-screen"}>
-            <Sidebar trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
-            {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
+            <Sidebar noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
+            <Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>
             <Content titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )

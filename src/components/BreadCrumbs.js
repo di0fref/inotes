@@ -28,16 +28,13 @@ function BreadCrumbs(props) {
                 p.push(props.title ? props.title : "Untitled")
 
                 setBreadCrumb(p)
-
-
-                console.log(p)
             })
         }
     }, [titleSaved, props.note.name])
 
 
     return (
-        <div className={"ml-4 text-muted text-sm "}>
+        <div className={"ml-4 text-muted text-sm"}>
             {breadCrumb.join(" / ")}
 
             {/*<div className={"flex truncate"}>*/}

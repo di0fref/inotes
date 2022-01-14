@@ -12,8 +12,7 @@ function Content(props) {
     }, [props.bookMarked])
 
     return (
-        <div className={"content flex-grow bg-gray-200 dark:bg-gray-900 "}>
-
+        <div className={"content flex-grow bg-gray-200 dark:bg-gray-900"}>
             <div className={"flex flex-col"}>
                 <div className={"h-14 px-4 flex items-center justify-between"}>
                     <div className={"ml-12 md:ml-0"}>
@@ -28,19 +27,12 @@ function Content(props) {
                     <div className={"mr-auto"}>
                         <BreadCrumbs note={props.currentNote}/>
                     </div>
-                    {props.currentNote.locked
-                        ?
-                        <Tooltip title={"Editing protected"}>
-                            <Lock className={"text-red-500 ml-2 mr-4 "}/>
-                        </Tooltip>
-                        : ""}
                     <div>
                         <NoteMenu currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
                     </div>
                 </div>
             </div>
-
-            <div className={"w-full h-full flex justify-center editor overflow-y-auto bg-gray-200 dark:bg-gray-900"}>
+            <div className={"w-full h-full flex justify-center min-h-full overflow-y-auto bg-gray-200 dark:bg-gray-900"}>
                 <div className={"w-full h-full lg:w-160 dark:text-gray-300/90"}>
                     <QuillEditor note={props.currentNote} titleChangeHandle={props.titleChangeHandle}/>
                 </div>
