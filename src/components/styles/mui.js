@@ -2,14 +2,6 @@ import {createTheme} from "@mui/material";
 
 const theme = createTheme({
     components: {
-        // MuiSvgIcon: {
-        //     styleOverrides: {
-        //         root: {
-        //             width: 16,
-        //             height: 16
-        //         }
-        //     }
-        // },
         MuiListItem: {
             styleOverrides: {
                 root: {
@@ -39,14 +31,6 @@ const theme = createTheme({
                 }
             }
         },
-        // MuiList: {
-        //     styleOverrides: {
-        //         root: {
-        //             marginTop: 10,
-        //             padding: 0,
-        //         }
-        //     }
-        // },
         MuiListItemButton: {
             styleOverrides: {
                 root: {
@@ -67,9 +51,6 @@ const theme = createTheme({
         mode: localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
     },
     typography: {
-        // body2: {
-        //     fontSize: "16",
-        // },
         fontFamily: [
             "var(--font-family)",
             "serif"

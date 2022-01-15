@@ -34,26 +34,8 @@ function BreadCrumbs(props) {
 
 
     return (
-        <div className={"ml-4 text-muted text-sm"}>
-            {breadCrumb.join(" / ")}
-
-            {/*<div className={"flex truncate"}>*/}
-            {/*    <div className={"flex items-center"}>*/}
-            {/*        <span><PersonOutlined className={"mr-2"}/></span>*/}
-            {/*        <span>My documents</span>*/}
-            {/*    </div>*/}
-            {/*    {breadCrumb.map((item, index) => (*/}
-            {/*        <div className={"flex items-center"} key={`${item}-b`}>*/}
-            {/*            <span className={"mx-2"}><HiChevronRight/></span>*/}
-            {/*            <span>{item}</span>*/}
-            {/*        </div>*/}
-            {/*    ))}*/}
-            {/*    <div className={"flex items-center"}>*/}
-            {/*        <span className={"mx-2"}><HiChevronRight/></span>*/}
-            {/*        <span>{props.note.name ? props.note.name : "Untitled"}</span>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
+        <div className={"ml-4 text-sm mr-2 text-gray-700 dark:text-gray-200"}>
+           {breadCrumb.join(" / ")}
         </div>
 
     )

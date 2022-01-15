@@ -10,16 +10,20 @@ html {
 	--scrollbar-base: #f2f3f5;
 	--scrollbar-thumb: #d8dadf;
 	--bg-button-over: rgb(59 130 246); /* bg-blue-500 */
-	--menu-bg: rgb(156 163 175);
+	--menu-bg: white;
 
 	--font-family: "Inter var", "serif";
 }
 
-body.dark {
+html.dark {
 	--editor-url-color: rgb(56 189 248);
 	--scrollbar-base: rgb(57, 72, 86);
 	--scrollbar-thumb: #5e646e;
 	--menu-bg: rgb(17 24 39);
+}
+
+.flex_{
+	border: 1px dotted red;
 }
 
 a:link {
@@ -28,7 +32,6 @@ a:link {
 
 .MuiListItemButton-root:hover {
 	@apply rounded !important;
-
 }
 
 .Mui-selected {
@@ -40,8 +43,8 @@ a:link {
 }
 
 .editor {
-	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-	height: calc(100vh);
+	background-image: url("./assets/bg.svg");
+	height: calc(100vh - 3.5rem);
 }
 
 .content {
@@ -63,7 +66,7 @@ textarea {
 }
 
 .sidebar-list {
-	height: calc(100% - 10rem);
+	height: calc(100% - 12rem);
 }
 
 button:hover {
@@ -137,6 +140,7 @@ button:hover {
 .quill > .ql-container > .ql-editor.ql-blank::before {
 	opacity: 0.5;
 	font-size: 16px;
+	@apply dark:text-gray-200 text-gray-600
 }
 
 /* Works on Firefox */
@@ -159,3 +163,17 @@ button:hover {
 	border-radius: 6px;
 	border: 2px solid transparent
 }
+.sidebar-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	opacity: 0.7;
+	z-index: 2;
+	transition: opacity 500ms ease-out;
+	-webkit-transition: opacity 500ms ease-out;
+	-moz-transition: opacity 500ms ease-out;
+	-o-transition: opacity 500ms ease-out;
+}
+
+

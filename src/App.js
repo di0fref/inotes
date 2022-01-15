@@ -2,15 +2,13 @@ import Main from "./components/Main";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import PrivateRoute from "./components/helpers/PrivateRoute";
 import Login from "./components/Login";
-import {useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {ThemeProvider} from "@emotion/react";
 import theme from "./components/styles/mui";
 import {CssBaseline} from "@mui/material";
 
-
 function App() {
-    const navigate = useNavigate();
 
     const [user, setUser] = useState(null)
     const auth = getAuth();
@@ -27,8 +25,9 @@ function App() {
         }
     });
 
-    useEffect(() => {
-    }, [user])
+    useEffect(() =>{
+        console.log(localStorage.theme)
+    },[localStorage.theme])
 
     return (
         <ThemeProvider theme={theme}>

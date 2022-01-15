@@ -1,8 +1,6 @@
-import {Divider, IconButton, ListItemIcon, ListItemText, MenuItem, Menu, MenuList, Switch} from "@mui/material";
+import {Divider, ListItemIcon, ListItemText, MenuItem, Menu, Switch} from "@mui/material";
 import {useEffect, useState} from "react";
-import {Delete, Edit, EditOff, PictureAsPdf, Share} from "@mui/icons-material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MenuButtonIcon from "../MenuButtonIcon";
+import {Delete, Edit, PictureAsPdf, Share} from "@mui/icons-material";
 import {ChevronDownIcon} from "@heroicons/react/solid";
 
 function NoteMenu(props) {
@@ -43,14 +41,9 @@ function NoteMenu(props) {
     };
     return (
         <>
-            {/*<MenuButtonIcon*/}
-            {/*    onClick={handleClick}*/}
-            {/*    aria-haspopup="true">*/}
-            {/*    <MoreVertIcon style={{width: "20px", height: "20px"}}/>*/}
-            {/*</MenuButtonIcon>*/}
-            <button onClick={handleClick} className={"inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"}>
+            <button onClick={handleClick} className={"bg-blue-500 hover:bg-blue-600 inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"}>
                 <div className={"flex items-center"}>
-                    <p>Options</p>
+                    <p className={"font-semibold text-sm"}>Options</p>
 
                     <ChevronDownIcon
                         className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"

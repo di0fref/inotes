@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import {
     Add,
-    Alarm, Article, Close,
+    Alarm, Article, ArticleOutlined, Close,
     ExpandLess,
     ExpandMore,
     FolderOutlined, Menu, MenuBookTwoTone, MoreVert, PersonOutlined, Search,
@@ -19,7 +19,6 @@ import {
     Tag,
 } from "@mui/icons-material";
 import TrashList from "./TrashList";
-import {sidebarListButton} from "./styles/styles"
 import {Link, useNavigate} from "react-router-dom";
 import Bookmarks from "./Bookmarks";
 import Tags from "./Tags";
@@ -67,16 +66,16 @@ function SidebarItem(props) {
 
                         <ListItemIcon>
                             {props.items.type === "folder"
-                                ? <FolderOutlined sx={{width: 16}}/>
-                                : <Article sx={{width: 16}}/>}
+                                ? <FolderOutlined sx={{width: 16}} className={"dark:text-gray-400 text-gray-700"}/>
+                                : <ArticleOutlined sx={{width: 16}} className={"dark:text-gray-400 text-gray-700"}/>}
                         </ListItemIcon>
                         <ListItemText>
-                        <span className={"font-medium_ text-gray-400"}>
+                        <span className={"dark:text-gray-400 text-gray-700"}>
                                 {props.items.name ? props.items.name : "Untitled"}
                         </span>
                         </ListItemText>
                         {props.items.items
-                            ? open ? <ExpandLess/> : <ExpandMore/>
+                            ? open ? <ExpandLess className={"dark:text-gray-400 text-gray-700"}/> : <ExpandMore className={"dark:text-gray-400 text-gray-700"}/>
                             : null
                         }
                     </ListItemButton>
@@ -130,11 +129,12 @@ function Sidebar(props) {
     }
     return (
         <>
-            {/*<div className={"absolute top-4 left-4 w-10 h-10 hover:text-white text-gray-300"}>*/}
-            {/*    <Tooltip title={"Show menu"}>*/}
-            {/*        <button onClick={hamburgerClickHandle}><Menu/></button>*/}
-            {/*    </Tooltip>*/}
-            {/*</div>*/}
+            <div onClick={() => setSidebarOpen(false)} className={`${sidebarOpen ? "w-full h-full" : "w-0 h-0"} sidebar-overlay`}/>
+            <div className={"absolute top-4 left-6 w-10 h-10 hover:text-white text-gray-300 block md:hidden"}>
+                <Tooltip title={"Show menu"}>
+                    <button onClick={hamburgerClickHandle}><Menu/></button>
+                </Tooltip>
+            </div>
             <div className={`
                 z-10
                 absolute 
@@ -147,31 +147,32 @@ function Sidebar(props) {
                 w-3/4_
                 h-screen_ 
                 -ml-76
-                bg-lb 
+                dark:bg-lb 
+                bg-gray-100
                 md:ml-0 
                 ${sidebarOpen ? "ml-0" : "-ml-76"}
                 flex-shrink-0 
-                px-4 
+                px-4_ 
                 py-2 
                 border-r 
                 dark:border-gray-700/30`}>
 
                 <div className={"flex items-center justify-between"}>
-                    <UserMenu/>
+                    <div className={"pl-4 pr-4 m-0 flex-grow"}><UserMenu/></div>
                     <Tooltip title={"Hide menu"}>
-                        <button onClick={() => setSidebarOpen(false)} className={"mb-auto mt-1 md:hidden block ml-4 hover:text-white text-gray-300"}>
+                        <button onClick={() => setSidebarOpen(false)} className={"mb-auto mr-2  mt-1 md:hidden block ml-4_ hover:text-white text-gray-300"}>
                             <Close className={""}/>
                         </button>
                     </Tooltip>
                 </div>
-                {/*<div className={""}>*/}
-                {/*    <button type="button" className="flex w-full items-center text-left space-x-3 px-4 h-10 bg-white ring-1 ring-gray-900/10 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm rounded-lg text-gray-400 dark:bg-gray-800 dark:ring-0 dark:text-gray-300 dark:highlight-white dark:hover:bg-gray-700">*/}
-                {/*        <Search sx={{height: 20, width: 20}}/>*/}
-                {/*        <span className="flex-auto text-sm text-gray-200">Quick search...</span><kbd className="font-sans font-semibold dark:text-gray-500"><abbr title="Command" className="no-underline text-gray-300 dark:text-gray-500">⌘</abbr> K</kbd>*/}
-                {/*    </button>*/}
-                {/*</div>*/}
+                <div className={"px-4"}>
+                    <button type="button" className="flex w-full items-center text-left space-x-3 px-4 h-10 bg-white ring-1 ring-gray-900/10 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm rounded-lg text-gray-400 dark:bg-gray-800 dark:ring-0 dark:text-gray-300 dark:highlight-white dark:hover:bg-gray-700">
+                        <Search sx={{height: 20, width: 20}}/>
+                        <span className="flex-auto text-sm text-gray-200">Quick search...</span><kbd className="font-sans font-semibold dark:text-gray-500"><abbr title="Command" className="no-underline text-gray-300 dark:text-gray-500">⌘</abbr> K</kbd>
+                    </button>
+                </div>
                 <NewMenu noteCreateHandle={props.noteCreateHandle}/>
-                <div className={"flex flex-col h-full sidebar-list overflow-y-auto"}>
+                <div className={"flex flex-col h-full sidebar-list overflow-y-auto px-4"}>
                     <div className={"flex-grow "}>
 
                         <Bookmarks bookmarked={props.bookMarked}/>
@@ -189,11 +190,11 @@ function Sidebar(props) {
                                             folderHandleClick(0)
                                         }
                                     }>
-                                    <ListItemIcon><PersonOutlined/></ListItemIcon>
+                                    <ListItemIcon><PersonOutlined className={"dark:text-gray-400 text-gray-700"}/></ListItemIcon>
                                     <ListItemText>
-                                        <span className={"font-semibold text-gray-400"}>My documents</span>
+                                        <span className={"font-semibold dark:text-gray-400 text-gray-700"}>My documents</span>
                                     </ListItemText>
-                                    {open ? <ExpandLess/> : <ExpandMore/>}
+                                    {open ? <ExpandLess className={"dark:text-gray-400 text-gray-700"}/> : <ExpandMore className={"dark:text-gray-400 text-gray-700"}/>}
                                 </ListItemButton>
                             </ListItem>
                             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -214,7 +215,7 @@ function Sidebar(props) {
                     </div>
                     <div className={"mt-auto"}>
                         {/*<Shared/>*/}
-                        <TrashList trashed={props.trashed}/>
+                        <div><TrashList trashed={props.trashed}/></div>
                     </div>
                 </div>
             </div>

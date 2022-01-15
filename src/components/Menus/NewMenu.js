@@ -1,4 +1,4 @@
-import {Add, Article, ExpandMore, Folder, FolderOutlined} from "@mui/icons-material";
+import {Add, Article, ArticleOutlined, ExpandMore, Folder, FolderOutlined} from "@mui/icons-material";
 import {ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
 import {useEffect, useState} from "react";
 
@@ -16,8 +16,8 @@ export default function NewMenu(props) {
     };
 
     return (
-        <div className={"px-3_ mt-3"}>
-            <button className={"w-full bg-blue-600 hover:bg-blue-800 rounded h-9 mt-2 hover:pointer"} onClick={handleClick}>
+        <div className={"px-3_ mt-3 mb-3 px-4"}>
+                <button onClick={handleClick} className={"bg-blue-500 hover:bg-blue-600 w-full px-4 py-2 text-sm font-medium text-white rounded-md  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"}>
                 <div className={"flex items-center"}>
                     <div className={"ml-2 mr-2"}><Add/></div>
                     <div className={"font-semibold text-sm"}>Create new</div>
@@ -29,12 +29,12 @@ export default function NewMenu(props) {
                 anchorEl={anchorEl}
                 open={open} PaperProps={{
                 style: {
-                    minWidth: 220
+                    minWidth: 288
                 }
             }}
                 anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
+                    vertical: 'bottom',
+                    horizontal: 'left',
                 }}
                 transformOrigin={{
                     vertical: 'top',
@@ -46,7 +46,7 @@ export default function NewMenu(props) {
                               handleClose()
                               props.noteCreateHandle()
                           }}>
-                    <ListItemIcon><Article/></ListItemIcon>
+                    <ListItemIcon><ArticleOutlined/></ListItemIcon>
                     <ListItemText>Document</ListItemText>
                 </MenuItem>
                 <MenuItem dense

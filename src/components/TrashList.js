@@ -20,9 +20,9 @@ function TrashList(props) {
                 <ListItemButton onClick={() => {
                     setOpen(!open)
                 }}>
-                    <ListItemIcon><Delete/></ListItemIcon>
-                    <ListItemText>Trash</ListItemText>
-                    {open ? <ExpandLess/> : <ExpandMore/>}
+                    <ListItemIcon><Delete className={"dark:text-gray-400 text-gray-700"}/></ListItemIcon>
+                    <ListItemText className={"dark:text-gray-400 text-gray-700"}>Trash</ListItemText>
+                    {open ? <ExpandLess className={"dark:text-gray-400 text-gray-700"}/> : <ExpandMore className={"dark:text-gray-400 text-gray-700"}/>}
                 </ListItemButton>
             </ListItem>
             <Collapse in={open}>

@@ -23,9 +23,9 @@ function Tags(props) {
                         <Tag className={"text-blue-400"}/>
                     </ListItemIcon>
                     <ListItemText>
-                        <span className={"font-semibold text-gray-400"}>Tags</span>
+                        <span className={"font-semibold dark:text-gray-400 text-gray-700"}>Tags</span>
                     </ListItemText>
-                    {open ? <ExpandLess/> : <ExpandMore/>}
+                    {open ? <ExpandLess className={"dark:text-gray-400 text-gray-700"}/> : <ExpandMore className={"dark:text-gray-400 text-gray-700"}/>}
                 </ListItemButton>
             </ListItem>
             <Collapse in={open}>
@@ -40,7 +40,7 @@ function Tags(props) {
                             </ListItem>
                         )
                     }) :
-                    <div className={"dark:highlight-white text-sm p-3 rounded rounded-lg bg-gray-700/30 mt-2 text-gray-400"}>
+                    <div className={"dark:highlight-white text-sm p-3 rounded rounded-lg bg-gray-200 dark:bg-gray-700/30 mt-2 dark:text-gray-400 text-gray-700"}>
                         Your tags will be sent here.
                     </div>}
             </Collapse>

@@ -1,12 +1,27 @@
-import {Button, Divider, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
-import {useState} from "react";
+import {
+    Button,
+    Divider,
+    ListItemIcon,
+    ListItemSecondaryAction,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Switch
+} from "@mui/material";
+import {useEffect, useState} from "react";
 import {Construction, Help, Logout} from "@mui/icons-material";
 import {getAuth} from "firebase/auth";
+import ThemeSwitcher from "../ThemeSwitcher";
 
 function UserMenu() {
 
     const [anchorEl, setAnchorEl] = useState(null)
+    const [dark, setDark] = useState(false)
     const open = Boolean(anchorEl);
+
+    useEffect(() => {
+
+    })
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -16,8 +31,10 @@ function UserMenu() {
     };
     const user = getAuth().currentUser
 
+    const handleToggle = () => {
+    }
     return (
-        <div className={"h-14 w-full mb-4 pt-1 hover:bg-gray-700/80 rounded"}>
+        <div className={"h-14 w-full mb-4 pt-1 hover:bg-gray-200 dark:hover:bg-gray-700/80 rounded dark:text-gray-400 text-gray-700"}>
             <button onClick={handleClick} className={"w-full py-1 mb-2 px-2"}>
                 <div className={"flex items-center justify-start"}>
                     <div className="avatar w-10 h-10 mr-1">
@@ -31,8 +48,8 @@ function UserMenu() {
             </button>
             <Menu open={open} anchorEl={anchorEl} onClose={handleClose}
                   anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
+                      vertical: 'bottom',
+                      horizontal: 'left',
                   }}
                   transformOrigin={{
                       vertical: 'top',
@@ -40,13 +57,17 @@ function UserMenu() {
                   }}
                   PaperProps={{
                       style: {
-                          minWidth: 200
+                          minWidth: 288
                       }
                   }}>
                 <MenuItem dense>
                     <ListItemIcon><Construction/></ListItemIcon>
                     <ListItemText>Settings</ListItemText>
                 </MenuItem>
+                {/*<MenuItem dense>*/}
+                {/*    <ListItemIcon><Construction/></ListItemIcon>*/}
+                {/*    <ListItemText><ThemeSwitcher/></ListItemText>*/}
+                {/*</MenuItem>*/}
                 <MenuItem dense>
                     <ListItemIcon><Help/></ListItemIcon>
                     <ListItemText>Help</ListItemText>

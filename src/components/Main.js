@@ -6,6 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import useUrl from "./hooks/useUrl";
 import FolderService from "../service/FolderService";
 import Notelist from "./Notelist";
+import SideTest from "./SideTest";
 
 function Main() {
 
@@ -105,8 +106,9 @@ function Main() {
     return (
         <div className={"wrapper flex w-full h-screen"}>
             <Sidebar noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
-            <Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>
-            <Content titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
+            <SideTest treeData={treeData} currentNote={currentNote}/>
+            {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
+            <Content noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
 }
