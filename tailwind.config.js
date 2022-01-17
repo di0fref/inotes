@@ -7,12 +7,16 @@ module.exports = {
     ],
     theme: {
         extend: {
+            transitionProperty: {
+                'height': 'height'
+            },
             fontFamily: {
                 sans: ['Inter var', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 lb: "rgb(27, 35, 48)",
-                lg: "rgba(255, 255, 255, 0.7)"
+                lg: "rgba(255, 255, 255, 0.7)",
+                pg: "rgb(30,41,62)"
             },
             width: {
                 "75": "18.75rem",

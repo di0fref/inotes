@@ -94,6 +94,7 @@ function SidebarItem(props) {
                                 selectedNote={props.selectedNote}
                                 setSelectedNote={props.setSelectedNote}
                                 currentNote={props.currentNote}
+                                folderHandleClick={props.folderHandleClick}
                             />
                         )
                     })}
@@ -148,7 +149,7 @@ function Sidebar(props) {
                 h-screen_ 
                 -ml-76
                 dark:bg-lb 
-                bg-gray-100
+                bg-gray-50
                 md:ml-0 
                 ${sidebarOpen ? "ml-0" : "-ml-76"}
                 flex-shrink-0 
@@ -160,7 +161,7 @@ function Sidebar(props) {
                 <div className={"flex items-center justify-between"}>
                     <div className={"pl-4 pr-4 m-0 flex-grow"}><UserMenu/></div>
                     <Tooltip title={"Hide menu"}>
-                        <button onClick={() => setSidebarOpen(false)} className={"mb-auto mr-2  mt-1 md:hidden block ml-4_ hover:text-white text-gray-300"}>
+                        <button onClick={() => setSidebarOpen(false)} className={"mb-auto mr-2  mt-1 md:hidden block hover:text-white text-gray-300"}>
                             <Close className={""}/>
                         </button>
                     </Tooltip>
@@ -205,7 +206,7 @@ function Sidebar(props) {
                                             items={subItem}
                                             key={index}
                                             depth={1}
-                                            folderHandleClick={folderHandleClick}
+                                            folderHandleClick={props.folderHandleClick}
                                             currentNote={props.currentNote}
                                         />
                                     )

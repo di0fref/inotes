@@ -4,6 +4,7 @@ import NotesService from "../service/NotesService";
 import {TextareaAutosize, Tooltip} from "@mui/material";
 import {Alarm, Lock, LockOutlined} from "@mui/icons-material";
 import Moment from "react-moment";
+import {FaClock, FaRegClock} from "react-icons/fa";
 
 function QuillEditor(props) {
 
@@ -31,6 +32,13 @@ function QuillEditor(props) {
             });
         }
     }
+    const changeHandler = (content, delta, source, editor) => {
+        setValue(content)
+        if(source==="user"){
+            const timer = setTimeout(() => saveToBackend(), 1000);
+            return () => clearTimeout(timer);
+        }
+    }
 
     const saveTitle = () => {
         /* Notify dispatcher of note title changed */
@@ -53,18 +61,19 @@ function QuillEditor(props) {
     }, [props.note.id, props.note.locked, props.note.deleted])
 
 
-    useEffect(() => {
-        const timer = setTimeout(() => saveToBackend(), 1000);
-        return () => clearTimeout(timer);
-    }, [value])
+    // useEffect(() => {
+    //     const timer = setTimeout(() => saveToBackend(), 1000);
+    //     return () => clearTimeout(timer);
+    // }, [value])
 
 
+    
     return (
         <div className={"ml-2"}>
             <div className={"mx-3 mt-6 mb-2"}>
                 <div className={"flex items-center justify-start"}>
-                    <div><Alarm/></div>
-                    <div className={"ml-2"}>Updated <Moment fromNow={note.updated_at}/></div>
+                    <div className={"text-slate-500"}><FaRegClock/></div>
+                    <div className={"ml-2 text-slate-500 text-sm"}>Updated <Moment fromNow={note.updated_at}/></div>
                     {locked
                         ?<Tooltip title={"Editing protected"}><div><LockOutlined className={"text-red-500 ml-2"}/></div></Tooltip>
                         :null}
@@ -87,7 +96,7 @@ function QuillEditor(props) {
                 value={value}
                 ref={editorRef}
                 bounds={".quill"}
-                onChange={setValue}/>
+                onChange={changeHandler}/>
         </div>
     )
 }

@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {Construction, Help, Logout} from "@mui/icons-material";
 import {getAuth} from "firebase/auth";
 import ThemeSwitcher from "../ThemeSwitcher";
+import {FaChevronDown} from "react-icons/fa";
 
 function UserMenu() {
 
@@ -34,7 +35,7 @@ function UserMenu() {
     const handleToggle = () => {
     }
     return (
-        <div className={"h-14 w-full mb-4 pt-1 hover:bg-gray-200 dark:hover:bg-gray-700/80 rounded dark:text-gray-400 text-gray-700"}>
+        <div className={"dark:highlight-white h-14 w-full mb-4 pt-1 bg-gray-200_ _dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700/50 rounded dark:text-gray-400 text-gray-700"}>
             <button onClick={handleClick} className={"w-full py-1 mb-2 px-2"}>
                 <div className={"flex items-center justify-start"}>
                     <div className="avatar w-10 h-10 mr-1">
@@ -44,40 +45,12 @@ function UserMenu() {
                         <p className={"font-semibold text-sm"}>{user.displayName}</p>
                         <p className={"text-muted text-xs"}>{user.email}</p>
                     </div>
+                    <div className={"ml-auto"}>
+                        <FaChevronDown className={"h-3 w-3 text-slate-500"}/>
+                    </div>
                 </div>
             </button>
-            <Menu open={open} anchorEl={anchorEl} onClose={handleClose}
-                  anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                  }}
-                  PaperProps={{
-                      style: {
-                          minWidth: 288
-                      }
-                  }}>
-                <MenuItem dense>
-                    <ListItemIcon><Construction/></ListItemIcon>
-                    <ListItemText>Settings</ListItemText>
-                </MenuItem>
-                {/*<MenuItem dense>*/}
-                {/*    <ListItemIcon><Construction/></ListItemIcon>*/}
-                {/*    <ListItemText><ThemeSwitcher/></ListItemText>*/}
-                {/*</MenuItem>*/}
-                <MenuItem dense>
-                    <ListItemIcon><Help/></ListItemIcon>
-                    <ListItemText>Help</ListItemText>
-                </MenuItem>
-                <Divider/>
-                <MenuItem dense>
-                    <ListItemIcon><Logout/></ListItemIcon>
-                    <ListItemText>Sign out</ListItemText>
-                </MenuItem>
-            </Menu>
+
         </div>
     )
 }

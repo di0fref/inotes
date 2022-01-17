@@ -32,6 +32,7 @@ function Main() {
         (async () => {
             let response = await FolderService.tree(0);
             setTreeData(response.data)
+            console.log(treeData)
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
@@ -105,8 +106,8 @@ function Main() {
     }
     return (
         <div className={"wrapper flex w-full h-screen"}>
-            <Sidebar noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
-            <SideTest treeData={treeData} currentNote={currentNote}/>
+            <SideTest noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
+            {/*<SideTest treeData={treeData} currentNote={currentNote}/>*/}
             {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
             <Content noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>

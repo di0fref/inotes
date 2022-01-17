@@ -25,7 +25,7 @@ function BreadCrumbs(props) {
 
                 p.push("My documents")
                 p.reverse()
-                p.push(props.title ? props.title : "Untitled")
+                p.push(props.note.name ? props.note.name : "Untitled")
 
                 setBreadCrumb(p)
             })
@@ -34,7 +34,7 @@ function BreadCrumbs(props) {
 
 
     return (
-        <div className={"ml-4 text-sm mr-2 text-gray-700 dark:text-gray-200"}>
+        <div className={"ml-4 text-sm mr-2 text-slate-600 dark:text-gray-200"}>
            {breadCrumb.join(" / ")}
         </div>
 

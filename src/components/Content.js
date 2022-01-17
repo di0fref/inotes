@@ -14,17 +14,16 @@ function Content(props) {
 
     return (
         <div className={"content flex-grow bg-white dark:bg-gray-900"}>
-            <ThemeSwitcher/>
-
             {props.currentNote.id ?
                 <>
+                    <ThemeSwitcher/>
                     <div className={"flex flex-col"}>
                         <div className={"h-14 px-4 flex items-center justify-between border-b dark:border-gray-800/40"}>
                             <div className={"ml-12 md:ml-0"}>
                                 <Tooltip title={`${!props.currentNote.bookmark ? "Add to favorites" : "Remove from favorites"}`}>
                                     <button onClick={props.setBookmark}>
                                         {!props.currentNote.bookmark
-                                            ? <StarOutline className={"dark:text-white"}/>
+                                            ? <StarOutline className={"dark:text-white text-slate-500"}/>
                                             : <Star className={"text-yellow-400"}/>}
                                     </button>
                                 </Tooltip>
@@ -35,6 +34,7 @@ function Content(props) {
                             <div>
                                 <NoteMenu currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
                             </div>
+                            {/*<div><ThemeSwitcher/></div>*/}
                         </div>
                     </div>
                     <div className={"editor w-full h-full flex justify-center min-h-full overflow-y-auto bg-white dark:bg-gray-900"}>
@@ -50,7 +50,7 @@ function Content(props) {
                     <div className={"mt-2"}>
                         <div className={"flex items-center justify-start"}>
                             <span className={"ml-2"}>
-                                <button onClick={props.noteCreateHandle} className={"block px-3 py-2 rounded-md bg-sky-600 hover:bg-sky-700 text-white"}>Create new document</button>
+                                <button onClick={props.noteCreateHandle} className={"block px-3 py-2 rounded-md text-white"}>Create new document</button>
                             </span>
                         </div>
                     </div>
