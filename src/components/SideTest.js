@@ -8,7 +8,7 @@ import {
 } from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {HiDocument, HiFolder} from "react-icons/hi";
-import {FaChevronCircleDown, FaChevronDown, FaChevronUp, FaRegFileAlt, FaRegFolder} from "react-icons/fa";
+import {FaChevronCircleDown, FaChevronDown, FaChevronUp, FaLock, FaRegFileAlt, FaRegFolder} from "react-icons/fa";
 import UserMenu from "./Menus/UserMenu";
 import {Tooltip} from "@mui/material";
 import NewMenu from "./Menus/NewMenu";
@@ -53,6 +53,10 @@ function SideItem(props) {
                         }
                     </span>
                         <span className={"dark:text-slate-100 text-slate-800"}>{props.items.name ? props.items.name : "Untitled"}</span>
+                        {props.items.locked
+                            ?<span className={"ml-2 text-opacity-40 text-slate-700 dark:text-slate-200 dark:text-opacity-40"}><FaLock className={"h-3 w-3"}/></span>
+                            :null
+                        }
                         <span className={"ml-auto mr-2"}>
                       {(props.items.items && props.items.items.length > 0)
                           ? open ? <FaChevronUp className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/> :
@@ -152,6 +156,7 @@ export default function SideTest(props) {
                                 key={index}
                                 depth={0}
                                 currentNote={props.currentNote}
+                                folderHandleClick={props.folderHandleClick}
                             />
                         )
                     })}

@@ -4,7 +4,7 @@ import NotesService from "../service/NotesService";
 import {TextareaAutosize, Tooltip} from "@mui/material";
 import {Alarm, Lock, LockOutlined} from "@mui/icons-material";
 import Moment from "react-moment";
-import {FaClock, FaRegClock} from "react-icons/fa";
+import {FaClock, FaLock, FaRegClock} from "react-icons/fa";
 
 function QuillEditor(props) {
 
@@ -60,14 +60,6 @@ function QuillEditor(props) {
         }
     }, [props.note.id, props.note.locked, props.note.deleted])
 
-
-    // useEffect(() => {
-    //     const timer = setTimeout(() => saveToBackend(), 1000);
-    //     return () => clearTimeout(timer);
-    // }, [value])
-
-
-    
     return (
         <div className={"ml-2"}>
             <div className={"mx-3 mt-6 mb-2"}>
@@ -75,7 +67,7 @@ function QuillEditor(props) {
                     <div className={"text-slate-500"}><FaRegClock/></div>
                     <div className={"ml-2 text-slate-500 text-sm"}>Updated <Moment fromNow={note.updated_at}/></div>
                     {locked
-                        ?<Tooltip title={"Editing protected"}><div><LockOutlined className={"text-red-500 ml-2"}/></div></Tooltip>
+                        ?<Tooltip title={"Editing protected"}><div className={"text-opacity-40 text-slate-700 dark:text-slate-200 dark:text-opacity-40"}><FaLock className={"ml-2"}/></div></Tooltip>
                         :null}
                 </div>
             </div>

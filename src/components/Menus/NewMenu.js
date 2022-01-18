@@ -35,9 +35,9 @@ export default function NewMenu(props) {
                         className="ml-2 -mr-1 text-violet-200 hover:text-violet-100 ml-auto w-3 h-3"
                         aria-hidden="true"/>
                 </Menu.Button>
-                <Menu.Items className={"dark:highlight-white_ bg-white text-slate-800 dark:bg-slate-700 absolute left-0 md:left-72 w-72 mt-2 origin-top-right divide-y_ _divide-gray-100 rounded-md shadow-lg dark:shadow-neutral-900 shadow-gray-600/60"}>
+                <Menu.Items className={"dark:highlight-white_ bg-white text-slate-800 dark:bg-slate-700 absolute right-0 _md:left-72 w-72 mt-2 origin-top-right divide-y_ _divide-gray-100 rounded-md shadow-lg dark:shadow-neutral-900 shadow-gray-600/60"}>
                     {data.map((item, index) => {
-                        return <div className="px-1_ py-1">
+                        return <div className="px-1_ py-1" key={index}>
                             <Menu.Item>
                                 {({active}) => (
                                     <button

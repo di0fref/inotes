@@ -89,6 +89,7 @@ function Main() {
             locked: locked
         }).then((result) => {
             setCurrentNote(result.data)
+            setLocked(!locked)
         })
     }
 
@@ -107,8 +108,6 @@ function Main() {
     return (
         <div className={"wrapper flex w-full h-screen"}>
             <SideTest noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
-            {/*<SideTest treeData={treeData} currentNote={currentNote}/>*/}
-            {/*<Notelist notes={notes} key={"note-list"} currentFolder={currentFolder}/>*/}
             <Content noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
