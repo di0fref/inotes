@@ -32,7 +32,7 @@ function Main() {
         (async () => {
             let response = await FolderService.tree(0);
             setTreeData(response.data)
-            console.log(treeData)
+            console.log(response.data)
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 

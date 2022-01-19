@@ -38,7 +38,7 @@ function Recents(props) {
                 {recents.length
                     ? recents.map((item, index) => {
                         return (
-                            <button onClick={() => {}} className={"w-full"}>
+                            <button onClick={() => {}} className={"w-full"} key={index}>
                                 <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 mr-4`} key={index}>
                             <span className={"mr-2 ml-4"}>
                                 <FaRegFileAlt className={"dark:text-slate-400 text-gray-500"}/>

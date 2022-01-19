@@ -1,13 +1,8 @@
 import {useEffect, useState} from "react";
 import {
-    ArticleOutlined, Close,
-    ExpandLess,
-    ExpandMore,
-    FolderOutlined,
-    PersonOutline, Search
+    Close, PersonOutline, Search
 } from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
-import {HiDocument, HiFolder} from "react-icons/hi";
 import {FaChevronCircleDown, FaChevronDown, FaChevronUp, FaLock, FaRegFileAlt, FaRegFolder} from "react-icons/fa";
 import UserMenu from "./Menus/UserMenu";
 import {Tooltip} from "@mui/material";
@@ -15,8 +10,75 @@ import NewMenu from "./Menus/NewMenu";
 import Bookmarks from "./Bookmarks";
 import Recents from "./Recents";
 import Tags from "./Tags";
+import NotesService from "../service/NotesService";
+import FolderService from "../service/FolderService";
+import {ItemTypes} from "./Constants";
+import {useDrop, useDrag} from "react-dnd";
 
-function SideItem(props) {
+function SideItem(props, {isDragging, tool}) {
+
+    const [{opacity}, drag] = useDrag(
+        () => ({
+            type: ItemTypes.CARD,
+            item: props.items,
+            collect: (monitor) => ({
+                opacity: monitor.isDragging() ? 0.1 : 1,
+            }),
+
+            end: (item, monitor) => {
+                const dropResult = monitor.getDropResult();
+                if (item && dropResult) {
+                    switch (item.type) {
+                        case "note":
+                            console.log(`Moving note ${item.id} into folder ${dropResult.id}`);
+
+                            if (item.id !== dropResult.id) {
+                                NotesService.update(item.id, {folder_id: dropResult.id}).then((result) => {
+                                    /* Send signal to update sidebar */
+                                    // props.droppedHandler();
+                                });
+                            } else {
+                                console.log("Drag ref == Drop ref:: Skipping");
+                            }
+                            break;
+                        case "folder":
+                            console.log(`Moving folder ${item.id} into folder ${dropResult.id}`);
+                            if (item.id !== dropResult.id) {
+                                FolderService.update(item.id, {parent_id: dropResult.id}).then((result) => {
+                                    /* Send signal to update sidebar */
+                                    // props.droppedHandler();
+                                });
+
+                            } else {
+                                console.log("Drag ref == Drop ref:: Skipping");
+                            }
+                            break;
+                    }
+                }
+            },
+        }), []
+    );
+
+    const [{canDrop, isOver}, drop] = useDrop(() => ({
+        accept: ItemTypes.CARD,
+        hover: (item, monitor) => {
+
+        },
+        drop: () => ({name: "SidebarLink", id: props.items.id, type: props.items.type}),
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }));
+
+
+    /* Attach both drag and drop ref to the component. */
+    const attacheRef = (el) => {
+        drag(el)
+        drop(el)
+    }
+
+    const isActive = canDrop && isOver;
 
     const [open, setOpen] = useState(false)
     const navigator = useNavigate()
@@ -32,22 +94,30 @@ function SideItem(props) {
 
     return (
         <>
-            <button onClick={
-                (e) => {
-                    setOpen(!open)
-                    clickHandle(props.items.id, props.items.type, props.items.folder_id)
-                }
-            } className={`w-full px-4`}
+            <button
+
+
+                onClick={
+                    (e) => {
+                        setOpen(!open)
+                        clickHandle(props.items.id, props.items.type, props.items.folder_id)
+                    }
+                } className={`w-full px-4`}
 
             >
-                <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1
+                <div
+
+                    ref={props.items.type === "folder"?(el) => attacheRef(el):drag}
+                    role="card"
+
+                    className={`flex items-center py-2 hover:bg-gray-600/20 rounded my-1  ${isActive ? "ring-2 ring-purple-500" : ""}
                     ${props.items.type === "note"
-                    ? (props.currentNote.id === props.items.id) ? "bg-gray-600/10" : ""
-                    : null
-                }`}
-                     style={{
-                         marginLeft: props.depth * 2,
-                     }}
+                        ? (props.currentNote.id === props.items.id) ? "bg-gray-600/10" : ""
+                        : null
+                    }`}
+                    style={{
+                        marginLeft: props.depth * 2,
+                    }}
                 >
                     <span className={"mr-2 ml-4"}>
                         {(props.items.type === "folder")
@@ -92,6 +162,16 @@ function SideItem(props) {
 
 
 export default function SideTest(props) {
+
+    const [{canDrop, isOver}, drop] = useDrop(() => ({
+        accept: ItemTypes.CARD,
+        drop: () => ({name: "NotebookHeader", id: 0}),
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }));
+    const isActive = canDrop && isOver;
 
     const [tree, setTree] = useState(props.treeData)
     const [open, setOpen] = useState(false)
@@ -140,11 +220,13 @@ export default function SideTest(props) {
 
             <div className={"my-2"}><Bookmarks bookmarked={props.bookMarked}/></div>
             <div className={"my-2"}><Recents recent={false}/></div>
-            {/*<div><Tags tagged={false}/></div>*/}
+            <div><Tags tagged={false}/></div>
 
             <div className={"text-gray-300 text-sm "}>
-                <button onClick={() => setOpen(!open)} className={"w-full px-4"}>
-                    <div className={"flex items-center py-2 hover:bg-gray-600/20 rounded mb-1"}>
+                <button onClick={() => setOpen(!open)} className={`w-full px-4 `}
+                >
+                    <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${isActive ? "ring-2 ring-purple-500" : ""}`} ref={drop}
+                         role="card">
                         <span className={"mr-2 ml-3"}>
                             <PersonOutline className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
                         </span>

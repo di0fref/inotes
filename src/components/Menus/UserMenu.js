@@ -20,7 +20,7 @@ function UserMenu() {
     }
 
     const user = auth.currentUser
-console.log(user);
+
     const data = [
         {
             title: "Settings",

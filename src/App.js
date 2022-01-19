@@ -7,6 +7,8 @@ import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {ThemeProvider} from "@emotion/react";
 import theme from "./components/styles/mui";
 import {CssBaseline} from "@mui/material";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
 
@@ -25,22 +27,25 @@ function App() {
         }
     });
 
-    useEffect(() =>{
+    useEffect(() => {
         // console.log(localStorage.theme)
-    },[localStorage.theme])
+    }, [localStorage.theme])
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
-            <Routes>
-                <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
-                    <Route path={"/folder/:folder_id/note/:note_id"} element={<Main/>}/>
-                    <Route exact path={"/:id"} element={<Main/>}/>
-                    <Route exact path={"/"} element={<Main/>}/>
-                </Route>
-                <Route exact path={"/login"} element={<Login/>}/>
-            </Routes>
-        </ThemeProvider>
+        <DndProvider backend={HTML5Backend} debugMode={true}>
+
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <Routes>
+                    <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
+                        <Route path={"/folder/:folder_id/note/:note_id"} element={<Main/>}/>
+                        <Route exact path={"/:id"} element={<Main/>}/>
+                        <Route exact path={"/"} element={<Main/>}/>
+                    </Route>
+                    <Route exact path={"/login"} element={<Login/>}/>
+                </Routes>
+            </ThemeProvider>
+        </DndProvider>
     )
 
 }
