@@ -19,6 +19,7 @@ function QuillEditor(props) {
     const isMounted = useRef(null)
 
     const saveToBackend = () => {
+        console.log("saveToBackend")
         if (note.id) {
             const data = {
                 text: JSON.stringify(editorRef.current.editor.getContents()),
@@ -41,6 +42,8 @@ function QuillEditor(props) {
     }
 
     const saveTitle = () => {
+        console.log("saveTitle")
+
         /* Notify dispatcher of note title changed */
         props.titleChangeHandle(title)
     }

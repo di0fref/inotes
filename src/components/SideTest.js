@@ -8,10 +8,20 @@ import {
 } from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import {HiDocument, HiFolder} from "react-icons/hi";
-import {FaChevronCircleDown, FaChevronDown, FaChevronUp, FaLock, FaRegFileAlt, FaRegFolder} from "react-icons/fa";
+import {
+    FaChevronCircleDown,
+    FaChevronDown,
+    FaChevronRight,
+    FaChevronUp,
+    FaLock,
+    FaRegFileAlt,
+    FaRegFolder
+} from "react-icons/fa";
 import UserMenu from "./Menus/UserMenu";
 import {Tooltip} from "@mui/material";
 import NewMenu from "./Menus/NewMenu";
+import SlideDown from "react-slidedown/lib/slidedown";
+import Pro from "./Pro";
 
 function SideItem(props) {
 
@@ -59,8 +69,9 @@ function SideItem(props) {
                         }
                         <span className={"ml-auto mr-2"}>
                       {(props.items.items && props.items.items.length > 0)
-                          ? open ? <FaChevronUp className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/> :
-                              <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                          ? open
+                              ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                              : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
                           : null
                       }
                     </span>
@@ -132,7 +143,6 @@ export default function SideTest(props) {
                 </button>
             </div>
             <NewMenu noteCreateHandle={props.noteCreateHandle}/>
-
             <div className={"text-gray-300 text-sm "}>
                 <button onClick={() => setOpen(!open)} className={"w-full px-4"}>
                     <div className={"flex items-center py-2 hover:bg-gray-600/20 rounded mb-1"}>
@@ -142,8 +152,8 @@ export default function SideTest(props) {
                         <span className={"font-semibold dark:text-slate-300 text-slate-700"}>My documents</span>
                         <span className={"ml-auto mr-3"}>
                           {open
-                              ? <FaChevronUp className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
-                              : <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                              ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                              : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
                           }
                     </span>
                     </div>
@@ -162,6 +172,7 @@ export default function SideTest(props) {
                     })}
                 </div>
             </div>
+            {/*<Pro treeData={props.treeData}/>*/}
         </div>
     )
 }

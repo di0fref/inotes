@@ -7,6 +7,7 @@ import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {ThemeProvider} from "@emotion/react";
 import theme from "./components/styles/mui";
 import {CssBaseline} from "@mui/material";
+import  "./App.sass"
 
 function App() {
 

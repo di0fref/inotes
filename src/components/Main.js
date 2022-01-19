@@ -79,9 +79,9 @@ function Main() {
             id: id,
         })
 
-        NotesService.getAll(id).then((result) => {
-            setNotes(result.data)
-        })
+        // NotesService.getAll(id).then((result) => {
+        //     setNotes(result.data)
+        // })
     }
 
     const setLockedHandle = (locked) => {
