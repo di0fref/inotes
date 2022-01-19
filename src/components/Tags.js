@@ -1,50 +1,70 @@
+
 import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
-import {Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {Article, ExpandLess, ExpandMore, Star, Tag} from "@mui/icons-material";
+import {FaChevronDown, FaChevronRight, FaChevronUp, FaRegFileAlt} from "react-icons/fa";
+import {Tag} from "@mui/icons-material";
 
 function Tags(props) {
-    const [tags, setTags] = useState([])
-    const [open, setOpen] = useState(false)
+    // const [tags, setTags] = useState([])
+    const [selected, setSelected] = useState(false)
 
+    // const [open, setOpen] = useState(false)
+    //
+    // useEffect(() => {
+    //     NotesService.getBookMarks().then((result) => {
+    //         setTags(result.data)
+    //     })
+    // }, [props.bookmarked])
     useEffect(() => {
-
-
-    }, [props.tagged])
+        setSelected(props.selected==="tags")
+    }, [props.selected])
 
     const clickHandler = () => {
-        setOpen(!open)
+        // setOpen(!open)
+        props.folderClicked("tags")
     }
     return (
-        <List dense>
-            <ListItem disablePadding>
-                <ListItemButton onClick={clickHandler}>
-                    <ListItemIcon>
-                        <Tag className={"text-blue-400"}/>
-                    </ListItemIcon>
-                    <ListItemText>
-                        <span className={"font-semibold dark:text-gray-400 text-gray-700"}>Tags</span>
-                    </ListItemText>
-                    {open ? <ExpandLess className={"dark:text-gray-400 text-gray-700"}/> : <ExpandMore className={"dark:text-gray-400 text-gray-700"}/>}
-                </ListItemButton>
-            </ListItem>
-            <Collapse in={open}>
-                {tags.length ?
-                    tags.map((item, index) => {
-                        return (
-                            <ListItem disablePadding key={index} sx={{pl: 4}}>
-                                <ListItemButton>
-                                    <ListItemIcon><Tags className={"text-blue-400"}/></ListItemIcon>
-                                    <ListItemText><span className={"text-gray-400"}>{item.name}</span></ListItemText>
-                                </ListItemButton>
-                            </ListItem>
-                        )
-                    }) :
-                    <div className={"dark:highlight-white text-sm p-3 rounded rounded-lg bg-gray-200 dark:bg-gray-700/30 mt-2 dark:text-gray-400 text-gray-700"}>
-                        Your tags will be sent here.
-                    </div>}
-            </Collapse>
-        </List>
+
+        <div className={"text-gray-300 text-sm"}>
+            <button onClick={clickHandler} className={"w-full px-2"}>
+                <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${selected?"bg-gray-600/10":""}`}>
+                        <span className={"mr-2 ml-3"}>
+                            <Tag className={"text-blue-500 w-5 h-5"}/>
+                        </span>
+                    <span className={"font-semibold dark:text-slate-400 text-gray-500"}>Tags</span>
+                    {/*<span className={"ml-2 text-xs dark:text-slate-400 text-gray-500"}>*/}
+                    {/*    {!open?(`(${tags.length} hidden)`):""}*/}
+                    {/*</span>*/}
+                    {/*<span className={"ml-auto mr-3"}>*/}
+                    {/*      {open*/}
+                    {/*          ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                    {/*          : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                    {/*      }*/}
+                    {/*</span>*/}
+                </div>
+            </button>
+            {/*<div className={`${open ? "h-full" : "h-0"} ml-11 overflow-hidden`}>*/}
+
+            {/*    {tags.length*/}
+            {/*        ? tags.map((item, index) => {*/}
+            {/*            return (*/}
+            {/*                <button onClick={() => {}} className={"w-full"} key={index}>*/}
+            {/*                    <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 mr-4`} key={index}>*/}
+            {/*                <span className={"mr-2 ml-4"}>*/}
+            {/*                    <FaRegFileAlt className={"dark:text-slate-400 text-gray-500"}/>*/}
+            {/*                </span>*/}
+            {/*                        <span className={"dark:text-slate-100 text-slate-800 "}>{item.name ? item.name : "Untitled"}</span>*/}
+            {/*                    </div>*/}
+            {/*                </button>*/}
+            {/*            )*/}
+            {/*        })*/}
+            {/*        :*/}
+            {/*        <div className={"dark:highlight-white text-sm p-3 rounded rounded-lg bg-gray-200 dark:bg-gray-700/30 mt-2 dark:text-gray-400 text-gray-700"}>*/}
+            {/*            Your favourites will be sent here.*/}
+            {/*        </div>*/}
+            {/*    }*/}
+            {/*</div>*/}
+        </div>
     )
 }
 
