@@ -59,7 +59,7 @@ function NoteMenu(props) {
                                 <div className="py-1" key={index}>
                                     <Menu.Item disabled={item.secondary?true:false} >
                                         {({active}) => (
-                                            <div
+                                            <button
                                                 onClick={item.action}
                                                 className={`${
                                                     active ? 'dark:bg-slate-600 dark:text-gray-200 text-slate-800 bg-gray-200' : 'dark:text-gray-200 text-slate-800'
@@ -70,7 +70,7 @@ function NoteMenu(props) {
                                                     ? <span className={"ml-auto mr-2"}>{item.secondary.item}</span>
                                                     :""
                                                 }
-                                            </div>
+                                            </button>
                                         )}
 
                                     </Menu.Item>

@@ -12,6 +12,9 @@ import {FaChevronCircleDown, FaChevronDown, FaChevronUp, FaLock, FaRegFileAlt, F
 import UserMenu from "./Menus/UserMenu";
 import {Tooltip} from "@mui/material";
 import NewMenu from "./Menus/NewMenu";
+import Bookmarks from "./Bookmarks";
+import Recents from "./Recents";
+import Tags from "./Tags";
 
 function SideItem(props) {
 
@@ -29,47 +32,49 @@ function SideItem(props) {
 
     return (
         <>
-                <button onClick={
-                    (e) => {
-                        setOpen(!open)
-                        clickHandle(props.items.id, props.items.type, props.items.folder_id)
-                    }
-                } className={`w-full px-4`}
+            <button onClick={
+                (e) => {
+                    setOpen(!open)
+                    clickHandle(props.items.id, props.items.type, props.items.folder_id)
+                }
+            } className={`w-full px-4`}
 
-                >
-                    <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1
+            >
+                <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1
                     ${props.items.type === "note"
-                        ? (props.currentNote.id === props.items.id) ? "bg-gray-600/10" : ""
-                        : null
-                    }`}
-                         style={{
-                             marginLeft: props.depth * 2,
-                         }}
-                    >
+                    ? (props.currentNote.id === props.items.id) ? "bg-gray-600/10" : ""
+                    : null
+                }`}
+                     style={{
+                         marginLeft: props.depth * 2,
+                     }}
+                >
                     <span className={"mr-2 ml-4"}>
                         {(props.items.type === "folder")
                             ? <FaRegFolder className={"dark:text-slate-400 text-gray-500"}/>
-                            : <FaRegFileAlt className={"dark:text-slate-400 text-gray-500"}/>
+                            // : <FaRegFileAlt className={"dark:text-slate-400 text-gray-500"}/>
+                            : ""
                         }
                     </span>
-                        <span className={"dark:text-slate-100 text-slate-800"}>{props.items.name ? props.items.name : "Untitled"}</span>
-                        {props.items.locked
-                            ?<span className={"ml-2 text-opacity-40 text-slate-700 dark:text-slate-200 dark:text-opacity-40"}><FaLock className={"h-3 w-3"}/></span>
-                            :null
-                        }
-                        <span className={"ml-auto mr-2"}>
+                    <span className={"dark:text-slate-100 text-slate-800 "}>{props.items.name ? props.items.name : "Untitled"}</span>
+                    {props.items.locked
+                        ?
+                        <span className={"ml-2 text-opacity-40 text-slate-700 dark:text-slate-200 dark:text-opacity-40"}><FaLock className={"h-3 w-3"}/></span>
+                        : null
+                    }
+                    <span className={"ml-auto mr-2"}>
                       {(props.items.items && props.items.items.length > 0)
                           ? open ? <FaChevronUp className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/> :
                               <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
                           : null
                       }
                     </span>
-                    </div>
-                </button>
+                </div>
+            </button>
             {(props.items.items) ? (
                 props.items.items.map((subItem, index) => {
                     return (
-                        <div key={index} className={`${open ? "h-full" : "h-0"} overflow-hidden`}>
+                        <div key={index} className={`${open ? "h-full" : "h-0"} overflow-hidden bg-gray-600_`}>
                             <SideItem
                                 key={index}
                                 items={subItem}
@@ -133,13 +138,17 @@ export default function SideTest(props) {
             </div>
             <NewMenu noteCreateHandle={props.noteCreateHandle}/>
 
+            <div className={"my-2"}><Bookmarks bookmarked={props.bookMarked}/></div>
+            <div className={"my-2"}><Recents recent={false}/></div>
+            {/*<div><Tags tagged={false}/></div>*/}
+
             <div className={"text-gray-300 text-sm "}>
                 <button onClick={() => setOpen(!open)} className={"w-full px-4"}>
                     <div className={"flex items-center py-2 hover:bg-gray-600/20 rounded mb-1"}>
                         <span className={"mr-2 ml-3"}>
-                            <PersonOutline className={"dark:text-gray-400 text-gray-700"}/>
+                            <PersonOutline className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
                         </span>
-                        <span className={"font-semibold dark:text-slate-300 text-slate-700"}>My documents</span>
+                        <span className={"font-semibold dark:text-slate-400 text-gray-500"}>My documents</span>
                         <span className={"ml-auto mr-3"}>
                           {open
                               ? <FaChevronUp className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>

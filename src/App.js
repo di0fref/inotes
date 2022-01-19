@@ -26,7 +26,7 @@ function App() {
     });
 
     useEffect(() =>{
-        console.log(localStorage.theme)
+        // console.log(localStorage.theme)
     },[localStorage.theme])
 
     return (
