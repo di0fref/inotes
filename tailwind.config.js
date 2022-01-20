@@ -7,6 +7,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontSize:{
+                's': ['.85rem', "1.25rem"],
+            },
             transitionProperty: {
                 'height': 'height'
             },

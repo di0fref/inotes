@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {
+    Article,
     Close, Folder, FolderOutlined, PersonOutline, Search
 } from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
@@ -92,20 +93,20 @@ function SideItem(props, {isDragging, tool}) {
         if (type === "note") {
             navigator(`/folder/${folder_id}/note/${id}`)
         } else {
-            setOpen(!open);
+            // setOpen(!open);
             props.folderClicked(id)
         }
     }
 
     return (
         <>
-            <button
+            <div
                 onClick={
                     (e) => {
-                        setOpen(!open)
                         clickHandle(props.items.id, props.items.type, props.items.folder_id)
                     }
-                } className={`w-full px-2`}>
+                }
+                className={`w-full px-2 hover:cursor-pointer`}>
                 <div
                     ref={props.items.type === "folder"?(el) => attacheRef(el):drag}
                     role="card"
@@ -118,20 +119,29 @@ function SideItem(props, {isDragging, tool}) {
                     style={{
                         marginLeft: props.depth * 1.5,
                     }}>
-                    <span className={"mr-2 ml-4"}>
-                            <FolderOutlined className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
+                    <button className={"ml-2 hover:bg-blue-600 p-1 rounded"} onClick={(e) => setOpen(!open)}>
+                                  {(props.items.items && props.items.items.length > 0)
+                            ? open
+                                ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                                : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
+                            : null
+                        }
+                    </button>
+                    <span className={"mr-2 ml-1"}>
+                        <FolderOutlined className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
                     </span>
-                    <span className={"font-semibold dark:text-slate-400 text-gray-500"}>{props.items.name ? props.items.name : "Untitled"}</span>
+                    <span className={"font-semibold dark:text-slate-400 text-gray-500"}>{props.items.name ? props.items.name : "Untitled"} </span>
                     <span className={"ml-auto mr-2"}>
-                      {(props.items.items && props.items.items.length > 0)
-                          ? open
-                              ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
-                              : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
-                          : null
-                      }
+                      {/*{(props.items.items && props.items.items.length > 0)*/}
+                      {/*    ? open*/}
+                      {/*        ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                      {/*        : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                      {/*    : null*/}
+                      {/*}*/}
+                        <span className={"text-xs"}>{props.items.items.length}</span>
                     </span>
                 </div>
-            </button>
+            </div>
             {(props.items.items) ? (
                 props.items.items.map((subItem, index) => {
                     return (
@@ -167,7 +177,7 @@ export default function SideTest(props) {
     const isActive = canDrop && isOver;
 
     const [tree, setTree] = useState(props.treeData)
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const[selected, setSelected] = useState("");
@@ -179,7 +189,6 @@ export default function SideTest(props) {
     const folderClicked = (id) => {
         props.folderHandleClick(id)
         setSelected(id)
-        console.log(id)
     }
 
     return (
@@ -225,22 +234,24 @@ export default function SideTest(props) {
             <div className={"my-2"}><Tags selected={selected} tagged={false} folderClicked={folderClicked}/></div>
 
             <div className={"text-gray-300 text-sm "}>
-                {/*<button onClick={() => setOpen(!open)} className={`w-full px-4 `}>*/}
-                {/*    <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${isActive ? "ring-2 ring-purple-500" : ""}`} ref={drop}*/}
-                {/*         role="card">*/}
-                {/*        <span className={"mr-2 ml-3"}>*/}
-                {/*            <PersonOutline className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>*/}
-                {/*        </span>*/}
-                {/*        <span className={"font-semibold dark:text-slate-400 text-gray-500"}>My documents</span>*/}
-                {/*        <span className={"ml-auto mr-3"}>*/}
-                {/*          {open*/}
-                {/*              ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                {/*              : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                {/*          }*/}
-                {/*    </span>*/}
-                {/*    </div>*/}
-                {/*</button>*/}
-                {/*<div className={`${open ? "h-full" : "h-0"} ml-5 overflow-hidden`}>*/}
+                <button
+                    onClick={() => folderClicked("docs")}
+                    className={`w-full px-2 `}>
+                    <div className={` ${(selected==="docs")?"bg-gray-600/10":""} flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${isActive ? "ring-2 ring-purple-500" : ""}`} ref={drop}
+                         role="card">
+                        <span className={"mr-2 ml-3"}>
+                            <Article className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
+                        </span>
+                        <span className={"font-semibold dark:text-slate-400 text-gray-500"}>My documents</span>
+                        <span className={"ml-auto mr-3"}>
+                          {/*{open*/}
+                          {/*    ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                          {/*    : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                          {/*}*/}
+                    </span>
+                    </div>
+                </button>
+                <div className={`${open ? "h-full" : "h-0"} ml-1_ overflow-hidden`}>
                     {tree.map((subItem, index) => {
                         return (
                             <SideItem
@@ -254,7 +265,7 @@ export default function SideTest(props) {
                             />
                         )
                     })}
-                {/*</div>*/}
+                </div>
             </div>
             {/*<Pro treeData={props.treeData}/>*/}
         </div>

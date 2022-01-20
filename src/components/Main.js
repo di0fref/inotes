@@ -75,13 +75,48 @@ function Main() {
     }
 
     const folderHandleClick = (id) => {
-        setCurrentFolder({
-            id: id,
-        })
 
-        NotesService.getNotesByCategory(id).then((result) => {
-            setNotes(result.data)
-        })
+
+        let folderName = ""
+
+        switch (id.toLowerCase()) {
+            case "bookmarks":
+                NotesService.getBookMarks().then((result) => {
+                    setNotes(result.data)
+                    setCurrentFolder({
+                        id: 0,
+                        name: "Bookmarks"
+                    })
+                })
+                break;
+            case "tags":
+                setCurrentFolder({
+                    id: 0,
+                    name: "Tags"
+                })
+                break;
+            case "recent":
+                setCurrentFolder({
+                    id: 0,
+                    name: "Recent"
+                })
+                break;
+            case "docs":
+                NotesService.getNotesByCategory(0).then((result) => {
+                    setNotes(result.data.notes)
+                    setCurrentFolder({
+                        id: 0,
+                        name: "My documents"
+                    })
+                })
+                break;
+            default:
+                NotesService.getNotesByCategory(id).then((result) => {
+                    setNotes(result.data.notes)
+                    setCurrentFolder(result.data.folder)
+                })
+                break;
+        }
     }
 
     const setLockedHandle = (locked) => {
