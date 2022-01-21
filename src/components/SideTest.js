@@ -138,7 +138,7 @@ function SideItem(props, {isDragging, tool}) {
                       {/*        : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
                       {/*    : null*/}
                       {/*}*/}
-                        <span className={"text-xs"}>{props.items.items.length}</span>
+                        <span className={"text-xs"}>{props.items.doc_count}</span>
                     </span>
                 </div>
             </div>

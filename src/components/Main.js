@@ -76,9 +76,6 @@ function Main() {
 
     const folderHandleClick = (id) => {
 
-
-        let folderName = ""
-
         switch (id.toLowerCase()) {
             case "bookmarks":
                 NotesService.getBookMarks().then((result) => {
@@ -146,7 +143,7 @@ function Main() {
     return (
         <div className={"wrapper flex w-full h-screen"}>
             <SideTest droppedHandler={droppedHandler} noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
-            <Notelist noteClicked={noteClicked} currentFolder={currentFolder} notes={notes}/>
+            <Notelist noteClicked={noteClicked} currentFolder={currentFolder} notes={notes} currentNote={currentNote}/>
             <Content noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
