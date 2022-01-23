@@ -28,7 +28,7 @@ function Recents(props) {
         <div className={"text-gray-300 text-sm "}>
             <button onClick={clickHandler} className={"w-full px-2"}>
                 <div className={`flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${selected?"bg-gray-600/10":""}`}>
-                        <span className={"mr-2 ml-3"}>
+                        <span className={"mr-2 ml-2"}>
                             <Alarm className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
                         </span>
                     <span className={"font-semibold dark:text-slate-400 text-gray-500"}>Recent</span>

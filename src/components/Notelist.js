@@ -3,13 +3,39 @@ import Moment from 'react-moment';
 import {Link, useNavigate} from "react-router-dom";
 import {QuillDeltaToHtmlConverter} from 'quill-delta-to-html';
 import {Search} from "@mui/icons-material";
+import {FaBars, FaHamburger, FaLock, FaRegEdit, FaTrash} from "react-icons/fa";
+import {Tooltip} from "@mui/material";
+import {useDrag, useDrop} from "react-dnd";
+import {ItemTypes} from "./Constants";
+import log from "tailwindcss/lib/util/log";
+import NotesService from "../service/NotesService";
 
 String.prototype.trunc = function (n) {
     return this.substr(0, n - 1) + (this.length > n ? "..." : "");
 };
 
-function Notelist(props) {
-
+function NoteCard(props) {
+    const [{isDragging}, drag] = useDrag(() => ({
+        type: ItemTypes.CARD,
+        item: props.note,
+        end: (item, monitor) => {
+            const dropResult = monitor.getDropResult();
+            if (item && dropResult) {
+                NotesService.update(item.id,{
+                    folder_id: dropResult.id
+                }).then((result) => {
+                    props.droppedHandler(dropResult.id, item.id)
+                })
+            }
+        },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+            handlerId: monitor.getHandlerId(),
+        }),
+    }));
+    const attacheRef = (el) => {
+        drag(el)
+    }
     const momentConfig = {
         lastDay: '[Yesterday at] HH:MM',
         sameDay: '[Today at] HH:MM',
@@ -18,20 +44,10 @@ function Notelist(props) {
         nextWeek: 'dddd [at] HH:MM',
         sameElse: "YYYY-MM-DD",
     }
-    const navigator = useNavigate()
-
-    const [notes, setNotes] = useState([])
-    const [activeNote, setActiveNote] = useState(null)
-
-    useEffect(() => {
-        setNotes(props.notes)
-    }, [props.notes, props.currentFolder.name])
-
 
     const strip = (text) => {
         return text.replace(/(<([^>]+)>)/gi, "");
     }
-
     const getIngress = (text) => {
 
         if (typeof text === "string") {
@@ -41,49 +57,92 @@ function Notelist(props) {
         }
         return "..."
     };
+    const [note, setNote] = useState([])
+
+    return (
+        <button role="card" ref={attacheRef} className={"text-left border-t_ dark:border-gray-700/90 w-full border-slate-100"}
+                onClick={() => props.noteClicked(props.note.id)}>
+            <div className={"my-2"}/>
+            <div className={`mx-3 rounded hover:bg-slate-100 dark:hover:bg-gray-700/20 note-card flex justify-center _mb-1 ${(props.currentNote.id === props.note.id) ? "dark:bg-gray-700/30 bg-slate-100" : ""}`}>
+                <div className="border-b dark:border-gray-700/20 flex flex-col w-full md:flex-row">
+                    <div className="flex flex-col justify-start p-4">
+                        <div className={"flex items-center justify-between mb-2"}>
+                            <p className="font-semibold text-base dark:text-gray-300 text-slate-800">{props.note.name ? props.note.name : "Untitled"}</p>
+                            <p className={"text-opacity-40 text-slate-700 dark:text-slate-200 dark:text-opacity-40"}>{props.note.locked ?
+                                <FaLock className={"h-3 w-3"}/> : ""}</p>
+                        </div>
+                        <p className="mb-4 text-s ">
+                            <span className={"dark:text-sky-500 text-sky-600"}>
+                                <Moment calendar={momentConfig}>{props.note.updated_at}</Moment>
+                            </span>
+                            <span className={"dark:text-gray-300 break-words text-slate-800"}> {getIngress(props.note.text)}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </button>
+    )
+}
+
+function Notelist(props) {
+
+    const navigator = useNavigate()
+
+    const [notes, setNotes] = useState([])
+    const [activeNote, setActiveNote] = useState(null)
+
+    useEffect(() => {
+        setNotes(props.notes)
+    }, [props.notes])
+
 
     const noteClicked = (id) => {
         setActiveNote(id)
         props.noteClicked(id)
-        navigator(`/folder/${props.currentFolder.id}/note/${id}`)
+        navigator(`/folder/${props.currentFolder.id || 0}/note/${id}`)
     }
-
     return (
-        <div className="bg-white dark:bg-gray-900 flex-shrink-0 _dark:bg-gray-800 dark:text-gray-200 border-r w-80 dark:border-gray-800 note-list">
-            {/*<div className={"p-2 mt-2"}>*/}
-
-            {/*    <button type="button" className="flex w-full items-center text-left space-x-3 px-4 h-10 bg-white ring-1 ring-gray-900/40 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm rounded-lg text-gray-400 dark:bg-gray-600 dark:ring-0 dark:text-gray-300 dark:highlight-white dark:hover:bg-gray-700">*/}
-            {/*        <Search sx={{height: 20, width: 20}}/>*/}
-            {/*        <span className="flex-auto text-sm text-gray-200">Quick search...</span><kbd className="font-sans font-semibold dark:text-gray-500"><abbr title="Command" className="no-underline text-gray-300 dark:text-gray-500">⌘</abbr> K</kbd>*/}
-            {/*    </button>*/}
-
-            {/*</div>*/}
-            <div className={"mb-4 mt-1 flex items-center justify-center"}>
-                <div className={"font-semibold dark:text-gray-300 text-slate-800"}>{props.currentFolder.name}</div>
+        <div className="
+            z-10
+            bg-white
+            dark:bg-gray-900
+            flex-shrink-0
+            dark:text-gray-200
+            border-r
+            md:w-80
+            w-full
+            dark:border-gray-800
+            note-list
+             absolute
+             md:static
+            ">
+            <div className={"flex items-center h-14 justify-between border-b px-4 dark:border-gray-700/20 border-slate-100"}>
+                <div className={"flex-grow"}>
+                    <input placeholder={"Search"} className=" w-full rounded rounded-lg dark:bg-gray-800 px-4 h-8 focus:outline-none focus:ring-1 focus:ring-gray-700"/>
+                </div>
+                <Tooltip title={"Create document"}>
+                    <button className={"ml-4 dark:text-gray-400 text-slate-500 hover:dark:text-gray-200"} onClick={props.noteCreateHandle}>
+                        <FaRegEdit/>
+                    </button>
+                </Tooltip>
+            </div>
+            <div className={"mb-2 mt-2 flex items-center"}>
+                {/*<div className={"ml-2"}><FaBars/></div>*/}
+                <div className={"font-semibold dark:text-gray-300 text-slate-800 mx-auto"}>
+                    {props.currentFolder.name}
+                </div>
             </div>
             <div className={"overflow-y-auto list"}>
                 {notes ?
                     notes.map((note, index) => {
                         return (
-                            <button className={"text-left border-t dark:border-gray-700/20 mx-3 border-slate-100"}
-                                    key={index}
-                                    onClick={() => noteClicked(note.id)}>
-                                <div className={`rounded hover:bg-slate-100 dark:hover:bg-gray-700/20 note-card flex justify-center ${(props.currentNote.id === note.id) ? "dark:bg-gray-700/30 bg-slate-100" : ""}`}>
-                                    <div className="flex flex-col w-full md:flex-row">
-                                        <div className="flex flex-col justify-start p-4">
-                                            <h5 className="mb-2 font-semibold text-base dark:text-gray-300 text-slate-800">{note.name ? note.name : "Untitled"}</h5>
-                                            <p className="mb-4 text-s ">
-                                                <span className={"text-sky-500"}>
-                                                    <Moment calendar={momentConfig}>{note.updated_at}</Moment>
-                                                </span>
-                                                <span className={"dark:text-gray-300 break-words text-slate-800"}> {getIngress(note.text)}</span>
-                                            </p>
-                                            {/*<p className="text-xs">Updated <Moment fromNow ago>{note.updated_at}</Moment> ago*/}
-                                            {/*</p>*/}
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
+                            <NoteCard
+                                key={index}
+                                noteClicked={noteClicked}
+                                note={note}
+                                currentNote={props.currentNote}
+                                droppedHandler={props.droppedHandler}
+                            />
                         )
                     })
                     : null}

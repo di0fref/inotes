@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import {
-    Article,
+    Article, ArticleOutlined,
     Close, Folder, FolderOutlined, PersonOutline, Search
 } from "@mui/icons-material";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {
+    FaArrowDown, FaCaretDown, FaCaretRight,
     FaChevronDown,
-    FaChevronRight,
+    FaChevronRight, FaFolder,
     FaLock, FaRegFileAlt,
     FaRegFolder
 } from "react-icons/fa";
@@ -20,6 +21,7 @@ import NotesService from "../service/NotesService";
 import FolderService from "../service/FolderService";
 import {ItemTypes} from "./Constants";
 import {useDrop, useDrag} from "react-dnd";
+import {CgFileDocument} from "react-icons/cg";
 
 function SideItem(props, {isDragging, tool}) {
 
@@ -52,7 +54,7 @@ function SideItem(props, {isDragging, tool}) {
                             if (item.id !== dropResult.id) {
                                 FolderService.update(item.id, {parent_id: dropResult.id}).then((result) => {
                                     /* Send signal to update sidebar */
-                                    props.droppedHandler();
+                                    props.droppedHandler(dropResult.id, item.id);
                                 });
 
                             } else {
@@ -86,70 +88,64 @@ function SideItem(props, {isDragging, tool}) {
 
     const isActive = canDrop && isOver;
 
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
     const navigator = useNavigate()
 
-    const clickHandle = (id, type, folder_id) => {
+    const clickHandle = (id, type, folder_id, e) => {
+        e.preventDefault()
         if (type === "note") {
             navigator(`/folder/${folder_id}/note/${id}`)
-        } else {
+        }
+        else {
             // setOpen(!open);
             props.folderClicked(id)
+            navigator(`/folder/${id||0}`)
         }
     }
 
+    useEffect(() =>{
+    },[props])
+
+    const chevronClickHandle = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setOpen(!open)
+    }
     return (
         <>
-            <div
-                onClick={
-                    (e) => {
-                        clickHandle(props.items.id, props.items.type, props.items.folder_id)
-                    }
-                }
-                className={`w-full px-2 hover:cursor-pointer`}>
-                <div
-                    ref={props.items.type === "folder"?(el) => attacheRef(el):drag}
-                    role="card"
-
-                    className={`flex items-center py-2 hover:bg-gray-600/20 rounded my-1  ${isActive ? "ring-2 ring-purple-500" : ""}
-                    ${props.items.type === "folder"
-                        ? (props.selected === props.items.id) ? "bg-gray-600/10" : ""
-                        : null
-                    }`}
-                    style={{
-                        marginLeft: props.depth * 1.5,
-                    }}>
-                    <button className={"ml-2 hover:bg-blue-600 p-1 rounded"} onClick={(e) => setOpen(!open)}>
-                                  {(props.items.items && props.items.items.length > 0)
-                            ? open
-                                ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
-                                : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>
-                            : null
+            <a ref={attacheRef} href={"#"} className={`${(props.selected === props.items.id) ? "dark:bg-gray-600/20" : ""} ${isActive ? "bg-blue-500" : ""} ml-4 text-dark-gray flex items-center dark:text-gray-200 p-2 rounded dark:hover:bg-slate-700 mx-2`} onClick={(e) => clickHandle(props.items.id, props.items.type, props.items.folder_id, e)}>
+                <div className={"flex items-center"}
+                     style={{
+                         marginLeft: props.depth * 2,
+                     }}>
+                    <button onClick={chevronClickHandle} className={""}>
+                        {(props.items.items && props.items.items.length > 0)
+                            ? <div className={"hover:dark:bg-gray-500 rounded h-4 w-4 p-1 flex items-center"}>
+                                {open?<FaCaretDown/>:<FaCaretRight/>}
+                            </div>
+                            :""
                         }
                     </button>
-                    <span className={"mr-2 ml-1"}>
-                        <FolderOutlined className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
-                    </span>
-                    <span className={"font-semibold dark:text-slate-400 text-gray-500"}>{props.items.name ? props.items.name : "Untitled"} </span>
-                    <span className={"ml-auto mr-2"}>
-                      {/*{(props.items.items && props.items.items.length > 0)*/}
-                      {/*    ? open*/}
-                      {/*        ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                      {/*        : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                      {/*    : null*/}
-                      {/*}*/}
-                        <span className={"text-xs"}>{props.items.doc_count}</span>
-                    </span>
                 </div>
-            </div>
+                <div className={"flex items-center mr-2 ml-1"}>
+                    {(props.items.type === "folder")
+                        ? <FaRegFolder className={"dark:text-yellow-600 text-yellow-500"}/>
+                        : <CgFileDocument/>}
+                </div>
+                <div className={"flex truncate items-center"}>
+                    {props.items.name ? props.items.name : "Untitled"}
+                </div>
+            </a>
+
+
             {(props.items.items) ? (
                 props.items.items.map((subItem, index) => {
                     return (
-                        <div key={index} className={`${open ? "h-full" : "h-0"} overflow-hidden bg-gray-600_`}>
+                        <div key={index} className={`${open ? "h-full" : "h-0"} overflow-hidden`}>
                             <SideItem
                                 key={index}
                                 items={subItem}
-                                depth={props.depth + 12}
+                                depth={props.depth + 10}
                                 currentNote={props.currentNote}
                                 folderClicked={props.folderClicked}
                                 droppedHandler={props.droppedHandler}
@@ -180,11 +176,15 @@ export default function SideTest(props) {
     const [open, setOpen] = useState(true)
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
-    const[selected, setSelected] = useState("");
+    const [selected, setSelected] = useState("");
 
     useEffect(() => {
         setTree(props.treeData)
     }, [props.treeData])
+
+    useEffect(() => {
+        setSelected(props.folder.id)
+    }, [ props.folder])
 
     const folderClicked = (id) => {
         props.folderHandleClick(id)
@@ -200,58 +200,45 @@ export default function SideTest(props) {
                 ease-on-out
                 duration-300
                 sidebar
-                w-60
-                -ml-60
+                w-76
+                -ml-76
                 dark:bg-lb
-                bg-slate-100
+                bg-light-gray
                 md:ml-0
                 flex-shrink-0
                 py-2
                 border-r
                 dark:border-gray-700/30`}>
 
-            {/*<div className={"flex items-center justify-between"}>*/}
-            {/*    <div className={"pl-4 pr-4 m-0 flex-grow"}>*/}
-            {/*        <UserMenu/>*/}
-            {/*    </div>*/}
-            {/*    <Tooltip title={"Hide menu"}>*/}
-            {/*        <button onClick={() => setSidebarOpen(false)} className={"mb-auto mr-2  mt-1 md:hidden block hover:text-white text-gray-300"}>*/}
-            {/*            <Close className={""}/>*/}
-            {/*        </button>*/}
-            {/*    </Tooltip>*/}
-            {/*</div>*/}
-            {/*<div className={"px-4"}>*/}
-            {/*    <button type="button" className="flex w-full items-center text-left space-x-3 px-4 h-10 bg-white ring-1 ring-gray-900/10 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm rounded-lg text-gray-400 dark:bg-gray-800 dark:ring-0 dark:text-gray-300 dark:highlight-white dark:hover:bg-gray-700/50 hover:bg-gray-200">*/}
-            {/*        <Search sx={{height: 20, width: 20}}/>*/}
-            {/*        <span className="flex-auto text-sm text-gray-500">Quick search...</span><kbd className="font-sans font-semibold dark:text-gray-500"><abbr title="Command" className="no-underline text-gray-300 dark:text-gray-500">⌘</abbr> K</kbd>*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-
-            {/*<NewMenu noteCreateHandle={props.noteCreateHandle}/>*/}
-
-            <div className={"my-2"}><Bookmarks selected={selected} bookmarked={props.bookMarked} folderClicked={folderClicked}/></div>
+            <div className={"my-2"}>
+                <Bookmarks selected={selected} bookmarked={props.bookMarked} folderClicked={folderClicked}/></div>
             <div className={"my-2"}><Recents selected={selected} recent={false} folderClicked={folderClicked}/></div>
             <div className={"my-2"}><Tags selected={selected} tagged={false} folderClicked={folderClicked}/></div>
 
             <div className={"text-gray-300 text-sm "}>
                 <button
-                    onClick={() => folderClicked("docs")}
+                    onClick={
+                        () => {
+                            // setOpen(!open)
+                            folderClicked("docs")
+                        }
+                    }
                     className={`w-full px-2 `}>
-                    <div className={` ${(selected==="docs")?"bg-gray-600/10":""} flex items-center py-2 hover:bg-gray-600/20 rounded mb-1 ${isActive ? "ring-2 ring-purple-500" : ""}`} ref={drop}
+                    <div className={` ${(selected === "docs" || selected===0) ? "dark:bg-gray-600/20" : ""} flex items-center py-2 dark:hover:bg-slate-700 rounded mb-1 ${isActive ? "bg-blue-500 text-white" : ""}`} ref={drop}
                          role="card">
-                        <span className={"mr-2 ml-3"}>
-                            <Article className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
+                        <span className={"mr-2 ml-2"}>
+                            <ArticleOutlined className={"dark:text-slate-400 text-gray-500 w-5 h-5"}/>
                         </span>
-                        <span className={"font-semibold dark:text-slate-400 text-gray-500"}>My documents</span>
-                        <span className={"ml-auto mr-3"}>
-                          {/*{open*/}
-                          {/*    ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                          {/*    : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
-                          {/*}*/}
-                    </span>
+                        <span className={"font-semibold dark:text-slate-400 text-gray-500"}>Documents</span>
+                        {/*<span className={"ml-auto mr-3"}>*/}
+                        {/*      {open*/}
+                        {/*          ? <FaChevronDown className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                        {/*          : <FaChevronRight className={"dark:text-gray-400 text-slate-500 h-3 w-3"}/>*/}
+                        {/*      }*/}
+                        {/*</span>*/}
                     </div>
                 </button>
-                <div className={`${open ? "h-full" : "h-0"} ml-1_ overflow-hidden`}>
+                <div className={`${open ? "h-full" : "h-0"} bg-gray-900/30_ _mx-2 highlight-white rounded overflow-hidden`}>
                     {tree.map((subItem, index) => {
                         return (
                             <SideItem
@@ -267,7 +254,6 @@ export default function SideTest(props) {
                     })}
                 </div>
             </div>
-            {/*<Pro treeData={props.treeData}/>*/}
         </div>
     )
 }

@@ -27,7 +27,7 @@ function QuillEditor(props) {
             }
             NotesService.update(note.id, data)
                 .then((result) => {
-
+                    props.docChangHandle()
                 }).catch((err) => {
                 console.log(err);
             });
@@ -42,8 +42,6 @@ function QuillEditor(props) {
     }
 
     const saveTitle = () => {
-        console.log("saveTitle")
-
         /* Notify dispatcher of note title changed */
         props.titleChangeHandle(title)
     }

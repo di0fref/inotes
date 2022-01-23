@@ -52,10 +52,10 @@ a:link {
 	height: calc(100vh - 3.5rem);
 }
 .list{
-	height: calc(100vh - 7.5rem);
+	height: calc(100vh - 6.5rem);
 }
 .note-list {
-	height: calc(100vh);
+	height: 100vh;
 }
 
 .sidebar {

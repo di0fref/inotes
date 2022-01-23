@@ -12,6 +12,7 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
 
+
     const [user, setUser] = useState(null)
     const auth = getAuth();
 
@@ -39,7 +40,8 @@ function App() {
                 <Routes>
                     <Route exact path={'/'} element={<PrivateRoute user={user}/>}>
                         <Route path={"/folder/:folder_id/note/:note_id"} element={<Main/>}/>
-                        <Route exact path={"/:id"} element={<Main/>}/>
+                        <Route exact path={"/folder/:folder_id"} element={<Main/>}/>
+                        <Route exact path={"/note/:note_id"} element={<Main/>}/>
                         <Route exact path={"/"} element={<Main/>}/>
                     </Route>
                     <Route exact path={"/login"} element={<Login/>}/>

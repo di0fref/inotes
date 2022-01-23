@@ -30,7 +30,7 @@ function Content(props) {
                                 </Tooltip>
                             </div>
                             <div className={"mr-auto"}>
-                                <BreadCrumbs note={props.currentNote}/>
+                            {/*    <BreadCrumbs note={props.currentNote}/>*/}
                             </div>
                             <div>
                                 <NoteMenu currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
@@ -42,7 +42,7 @@ function Content(props) {
                     </div>
                     <div className={"editor w-full h-full flex justify-center min-h-full overflow-y-auto bg-white dark:bg-gray-900"}>
                         <div className={"w-full h-full lg:w-160 dark:text-gray-300/90 text-gray-700"}>
-                            <QuillEditor note={props.currentNote} titleChangeHandle={props.titleChangeHandle}/>
+                            <QuillEditor docChangHandle={props.docChangHandle} note={props.currentNote} titleChangeHandle={props.titleChangeHandle}/>
                         </div>
                     </div>
                 </>
