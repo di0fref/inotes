@@ -30,10 +30,10 @@ function Content(props) {
                                 </Tooltip>
                             </div>
                             <div className={"mr-auto"}>
-                            {/*    <BreadCrumbs note={props.currentNote}/>*/}
+                                <BreadCrumbs note={props.currentNote}/>
                             </div>
                             <div>
-                                <NoteMenu currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
+                                <NoteMenu moveToTrashHandler={props.moveToTrashHandler} currentNote={props.currentNote} setLockedHandle={props.setLockedHandle}/>
                             </div>
                             <div>
                                 <ThemeSwitcher/>

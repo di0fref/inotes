@@ -37,7 +37,7 @@ function NoteMenu(props) {
         {
             title: "Move to trash",
             icon: <FaTrash/>,
-            action: () => _action()
+            action: () => props.moveToTrashHandler(props.currentNote.id)
         },
     ]
 
@@ -59,20 +59,19 @@ function NoteMenu(props) {
                                 <div className="py-1" key={index}>
                                     <Menu.Item disabled={item.secondary?true:false} >
                                         {({active}) => (
-                                            <button
+                                            <div
                                                 onClick={item.action}
                                                 className={`${
                                                     active ? 'dark:bg-slate-600 dark:text-gray-200 text-slate-800 bg-gray-200' : 'dark:text-gray-200 text-slate-800'
-                                                } group flex items-center w-full px-2 py-2 text-sm`}>
+                                                } group flex items-center w-full px-2 py-2 text-sm cursor-pointer`}>
                                                 <span className={"ml-3 mr-4"}>{item.icon}</span>
                                                 <span>{item.title}</span>
                                                 {item.secondary
                                                     ? <span className={"ml-auto mr-2"}>{item.secondary.item}</span>
                                                     :""
                                                 }
-                                            </button>
+                                            </div>
                                         )}
-
                                     </Menu.Item>
                                 </div>
                             )

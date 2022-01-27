@@ -16,8 +16,6 @@ function QuillEditor(props) {
     const [value, setValue] = useState(null)
     const editorRef = useRef(null);
 
-    const isMounted = useRef(null)
-
     const saveToBackend = () => {
         console.log("saveToBackend")
         if (note.id) {

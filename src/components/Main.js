@@ -39,9 +39,10 @@ function Main() {
         (params) => {
             if (params.folder && params.note) {
                 noteClicked(params.note);
+                folderClickedHandle(params.folder)
             }
             if (params.folder && !params.note) {
-                folderHandleClick(params.folder)
+                folderClickedHandle(params.folder)
             }
         },
         [params]
@@ -54,17 +55,12 @@ function Main() {
         }).then((result) => {
             setCurrentNote(result.data)
             setBookMarked(!bookMarked)
-            if (currentFolder.name === "Bookmarks") {
-                folderHandleClick("bookmarks")
-            }
         })
     }
     const noteClicked = (id) => {
         NotesService.get(id)
             .then((result) => {
                 setCurrentNote(result.data);
-                // folderHandleClick(result.data.folder_id)
-                /* Insert into recent */
             })
             .catch((err) => {
                 console.log(err);
@@ -72,85 +68,28 @@ function Main() {
     }
 
     const docChangHandle = () => {
-        folderHandleClick(currentFolder.id)
+        folderClickedHandle(currentFolder.id)
+        /* Insert into recent */
     }
+
     const titleChangeHandle = (title) => {
         NotesService.update(currentNote.id, {name: title})
             .then((result) => {
                 setCurrentNote(result.data)
                 setTitleChanged(!titleChanged)
-                folderHandleClick(currentFolder.id)
+                folderClickedHandle(currentFolder.id)
             }).catch((err) => {
             console.log(err);
         })
     }
 
-    const folderHandleClick = (id) => {
-        switch (id) {
-            case "bookmarks":
-                NotesService.getBookMarks().then((result) => {
-                    setNotes(result.data)
-                    setCurrentFolder({
-                        id: 0,
-                        name: "Bookmarks"
-                    })
-                    if (result.data.notes.length) {
-                        setCurrentNote(result.data.notes[0])
-                    } else {
-                        setCurrentNote([])
-                    }
-                })
-                break;
-            case "tags":
-                setCurrentFolder({
-                    id: 0,
-                    name: "Tags"
-                })
-                // if (result.data.notes.length) {
-                //     setCurrentNote(result.data.notes[0])
-                // } else {
-                //     setCurrentNote([])
-                // }
-                break;
-            case "recent":
-                setCurrentFolder({
-                    id: 0,
-                    name: "Recent"
-                })
-                // if(result.data.notes.length) {
-                //     setCurrentNote(result.data.notes[0])
-                // }
-                // else {
-                //     setCurrentNote([])
-                // }
-                break;
-            case "docs":
-            case 0:
-                NotesService.getNotesByCategory(0).then((result) => {
-                    setNotes(result.data.notes)
-                    setCurrentFolder({
-                        id: 0,
-                        name: "Documents"
-                    })
-                    if (result.data.notes.length) {
-                        setCurrentNote(result.data.notes[0])
-                    } else {
-                        setCurrentNote([])
-                    }
-                })
-                break;
-            default:
-                NotesService.getNotesByCategory(id).then((result) => {
-                    setNotes(result.data.notes)
-                    setCurrentFolder(result.data.folder)
-                    if (result.data.notes.length) {
-                        setCurrentNote(result.data.notes[0])
-                    } else {
-                        setCurrentNote([])
-                    }
-                })
-                break;
-        }
+    const moveToTrashHandler = (id) => {
+        NotesService.update(id,{
+            deleted: 1
+        }).then((result) =>{
+            setCurrentNote([])
+            setTrashed(!trashed)
+        })
     }
 
     const setLockedHandle = (locked) => {
@@ -159,15 +98,15 @@ function Main() {
         }).then((result) => {
             setCurrentNote(result.data)
             setLocked(!locked)
-            folderHandleClick(currentFolder.id)
         })
     }
 
     const droppedHandler = (dropResultID, itemID) => {
+        navigator("/folder/"+dropResultID+"/note/"+itemID)
         setDropped(!dropped)
-        folderHandleClick(dropResultID)
     }
-    const noteCreateHandle = () => {
+
+    const noteCreateHandle = (folder_id) => {
         NotesService.create({
             folder_id: currentFolder.id || 0,
             name: ""
@@ -179,11 +118,20 @@ function Main() {
             console.log(err);
         })
     }
+
+    const folderClickedHandle = (id) => {
+        NotesService.getNotesByCategory(id).then((result) => {
+            setNotes(result.data.notes)
+        })
+        setCurrentFolder({
+            id: id
+        })
+    }
     return (
         <div className={"wrapper flex w-full h-screen"}>
-            <SideTest droppedHandler={droppedHandler} noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData} folderHandleClick={folderHandleClick} key={"sidebar"} folder={currentFolder}/>
+            <SideTest folderClickedHandle={folderClickedHandle} droppedHandler={droppedHandler} noteCreateHandle={noteCreateHandle} trashed={trashed} bookMarked={bookMarked} currentNote={currentNote} treeData={treeData}  key={"sidebar"} currentFolder={currentFolder}/>
             <Notelist droppedHandler={droppedHandler} noteCreateHandle={noteCreateHandle} noteClicked={noteClicked} currentFolder={currentFolder} notes={notes} currentNote={currentNote}/>
-            <Content docChangHandle={docChangHandle} noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
+            <Content moveToTrashHandler={moveToTrashHandler} docChangHandle={docChangHandle} noteCreateHandle={noteCreateHandle} titleChangeHandle={titleChangeHandle} setLockedHandle={setLockedHandle} setBookmark={setBookmark} bookMarked={bookMarked} key={"content"} currentFolder={currentFolder} currentNote={currentNote}/>
         </div>
     )
 }

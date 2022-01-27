@@ -166,7 +166,7 @@ function Sidebar(props) {
                         </button>
                     </Tooltip>
                 </div>
-                <div className={"px-4"}>
+                <div className={"px-4 mb-8"}>
                     <button type="button" className="flex w-full items-center text-left space-x-3 px-4 h-10 bg-white ring-1 ring-gray-900/10 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm rounded-lg text-gray-400 dark:bg-gray-800 dark:ring-0 dark:text-gray-300 dark:highlight-white dark:hover:bg-gray-700">
                         <Search sx={{height: 20, width: 20}}/>
                         <span className="flex-auto text-sm text-gray-200">Quick search...</span><kbd className="font-sans font-semibold dark:text-gray-500"><abbr title="Command" className="no-underline text-gray-300 dark:text-gray-500">⌘</abbr> K</kbd>

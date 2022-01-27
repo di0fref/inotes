@@ -40,9 +40,9 @@ function UserMenu() {
     ];
 
     return (
-        <div className={"mb-2"}>
+        <div className={"mb-2_"}>
             <Menu as="div" className="relative inline-block text-left w-full">
-                <Menu.Button className={"text-slate-500 hover:bg-gray-600/20 dark:hover:bg-gray-700/80 inline-flex justify-start items-center w-full px-4 py-2 text-sm font-medium rounded-md focus:outline-none "}>
+                <Menu.Button className={"px-4 text-slate-500 hover:bg-gray-600/20 hover:bg-gray-600/20 inline-flex justify-start items-center w-full py-2 text-sm font-medium _rounded-md focus:outline-none "}>
                     <div className={"flex"}>
                         <div><img src={user.photoURL} alt={"Avatar"} className={"rounded rounded-full h-10 w-10"}/></div>
                         <div className={"ml-3"}>
@@ -51,9 +51,9 @@ function UserMenu() {
                         </div>
                     </div>
                 </Menu.Button>
-                <Menu.Items className={"z-10  bg-white text-slate-800 dark:bg-slate-700 absolute right-0 w-60 mt-2 origin-top-right divide-y_ _divide-gray-100 rounded-md shadow-lg dark:shadow-neutral-900 shadow-gray-600/60"}>
+                <Menu.Items className={"z-10 bg-white text-slate-800 dark:bg-slate-700 absolute right-0 w-60 mt-2 origin-top-right divide-y_ _divide-gray-100 rounded-md shadow-lg dark:shadow-neutral-900 shadow-gray-600/60"}>
                     {data.map((item, index) => {
-                        return <div className="px-1_ py-1" key={index}>
+                        return <div className="py-1" key={index}>
                             <Menu.Item>
                                 {({active}) => (
                                     <button

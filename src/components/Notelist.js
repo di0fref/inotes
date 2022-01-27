@@ -21,10 +21,13 @@ function NoteCard(props) {
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult();
             if (item && dropResult) {
-                NotesService.update(item.id,{
+                console.log(`Moving note ${item.id} into folder ${dropResult.id}`);
+
+                NotesService.update(item.id, {
                     folder_id: dropResult.id
                 }).then((result) => {
                     props.droppedHandler(dropResult.id, item.id)
+
                 })
             }
         },
@@ -60,10 +63,10 @@ function NoteCard(props) {
     const [note, setNote] = useState([])
 
     return (
-        <button role="card" ref={attacheRef} className={"text-left border-t_ dark:border-gray-700/90 w-full border-slate-100"}
+        <button className={"text-left border-t_ dark:border-gray-700/90 w-full border-slate-100"}
                 onClick={() => props.noteClicked(props.note.id)}>
             <div className={"my-2"}/>
-            <div className={`mx-3 rounded hover:bg-slate-100 dark:hover:bg-gray-700/20 note-card flex justify-center _mb-1 ${(props.currentNote.id === props.note.id) ? "dark:bg-gray-700/30 bg-slate-100" : ""}`}>
+            <div  role="card" ref={attacheRef} className={`mx-3 rounded hover:bg-slate-100 dark:hover:bg-gray-700/20 note-card flex justify-center _mb-1 ${(props.currentNote.id === props.note.id) ? "dark:bg-gray-700/30 bg-slate-100" : ""}`}>
                 <div className="border-b dark:border-gray-700/20 flex flex-col w-full md:flex-row">
                     <div className="flex flex-col justify-start p-4">
                         <div className={"flex items-center justify-between mb-2"}>
@@ -101,6 +104,7 @@ function Notelist(props) {
         props.noteClicked(id)
         navigator(`/folder/${props.currentFolder.id || 0}/note/${id}`)
     }
+
     return (
         <div className="
             z-10
@@ -118,7 +122,8 @@ function Notelist(props) {
             ">
             <div className={"flex items-center h-14 justify-between border-b px-4 dark:border-gray-700/20 border-slate-100"}>
                 <div className={"flex-grow"}>
-                    <input placeholder={"Search"} className=" w-full rounded rounded-lg dark:bg-gray-800 px-4 h-8 focus:outline-none focus:ring-1 focus:ring-gray-700"/>
+                    <input
+                        placeholder={"Search"} className=" w-full rounded rounded-lg dark:bg-gray-800 px-4 h-8 focus:outline-none focus:ring-1 focus:ring-gray-700"/>
                 </div>
                 <Tooltip title={"Create document"}>
                     <button className={"ml-4 dark:text-gray-400 text-slate-500 hover:dark:text-gray-200"} onClick={props.noteCreateHandle}>
@@ -133,7 +138,7 @@ function Notelist(props) {
                 </div>
             </div>
             <div className={"overflow-y-auto list"}>
-                {notes ?
+                {notes.length ?
                     notes.map((note, index) => {
                         return (
                             <NoteCard
@@ -144,8 +149,7 @@ function Notelist(props) {
                                 droppedHandler={props.droppedHandler}
                             />
                         )
-                    })
-                    : null}
+                    }) : null}
             </div>
         </div>
     )
